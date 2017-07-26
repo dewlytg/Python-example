@@ -116,7 +116,7 @@ import sys
 
 
 def send_mail(_to_email, _subject, _message):
-    _from_email = 'zabbix@cutt.com'
+    _from_email = 'zabbix@example.com'
     msg = MIMEMultipart()
     msg['From'] = _from_email
     msg['To'] = _to_email
@@ -125,7 +125,7 @@ def send_mail(_to_email, _subject, _message):
     msg.attach(txt)
     smtp = smtplib.SMTP()
     smtp.connect('smtp.mxhichina.com:25')
-    smtp.login('zabbix@cutt.com', 'Hello1234')
+    smtp.login('zabbix@example.com', '123')
     smtp.sendmail(_from_email, _to_email, msg.as_string())
     smtp.quit()
 
