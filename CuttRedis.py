@@ -8,7 +8,7 @@ __author__="dewly_tg"
 
 import redis
 
-pool = redis.ConnectionPool(host="192.168.2.41", port="6379")
+pool = redis.ConnectionPool(host="192.168.1.1", port="6379")
 r = redis.Redis(connection_pool=pool)
 
 r.set('foo','Bar',ex=3)
