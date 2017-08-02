@@ -15,7 +15,7 @@ longint3 = 123L
 print int1,int2,longint3
 print type(int1),type(int2),type(longint3)
 print str(int1),str(int2),bytes(longint3)
-print type(str(int1)),type(str(str2)),type(bytes(longint3))
+print type(str(int1)),type(str(int2)),type(bytes(longint3))
 
 ##浮点型声明方式,浮点型转换为字符串str(),科学计数法声明，把10用e替代，1.23x109就是1.23e9
 float1 = 123.01

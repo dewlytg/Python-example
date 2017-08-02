@@ -23,14 +23,25 @@ class Student(object):
         self.name = name
         self.score = score
 
-    def print_score(self):
-        print "%s: %s" %(self.name,self.score)
+    def get_hello(self):
+        print "hello world!"
+
+    def get_method(self):
+        # 普通方法没有限制
+        print "普通方法"
+        print Student.class_attr
+        print Student._class_private
+        print Student.__class_private
+        print self.instance_attr
+        print self._instance_private
+        print self.__instance_private
         self._privatemethod()
         self.__privatemethod()
+        self.get_hello()
 
     @property
     def get_propertymethod(self):
-        # 静态方法可以访问类属性和实例属性
+        # 属性方法也没有限制，只是在调用方法的时候不用带'()'
         print "属性方法"
         print Student.class_attr
         print Student._class_private
@@ -38,10 +49,13 @@ class Student(object):
         print self.instance_attr
         print self._instance_private
         print self.__instance_private
+        self._privatemethod()
+        self.__privatemethod()
+        self.get_hello()
 
     @staticmethod
     def get_staticmethod():
-        # 静态方法可以访问类属性，不能访问实例属性
+        # 静态方法就是不用带self参数，静态方法可以访问类属性，不能访问实例属性，不能调用方法
         print "静态方法"
         print Student.class_attr
         print Student._class_private
@@ -49,7 +63,7 @@ class Student(object):
 
     @classmethod
     def get_classmethod(cls):
-        ##类方法可以访问类属性，不能访问实例属性
+        ## 类方法就是把self参数变成了cls，类方法可以访问类属性，不能访问实例属性，不能调用方法
         print "类方法"
         print cls.class_attr
         print cls._class_private
@@ -70,7 +84,7 @@ class Student(object):
         print "delete all datas"
 
 stu01 = Student("tom",100)
-stu01.print_score()
+stu01.get_method()
 
 print
 print stu01.class_attr
@@ -84,12 +98,12 @@ stu01.get_propertymethod
 
 ##外部定义类方法
 from types import MethodType
-def set_score(self, email):
+def set_email(self, email):
     self.email = email
 
-Student.set_score = MethodType(set_score, None, Student)
+Student.set_email = MethodType(set_email, None, Student)
 stu02 = Student("james",23)
-stu02.set_score("james@NBA.COM")
+stu02.set_email("james@NBA.COM")
 print
 print stu02.email
 
@@ -126,3 +140,5 @@ if __name__ == "__main__":
     s = SubClass("Joan",1,800)
     s.talk("a story")
     s.speak("b story")
+    issubclass(SubClass,BaseClass)
+    hasattr(s,"talk")

@@ -19,12 +19,12 @@ print dic1.keys()
 print dic1.values()
 print dic1.items()
 
-#改和增
+##改和增
 dic1["name"] = "JAMES"
 dic1["email"] = "james@NBA.COM"
 print dic1
 
-#删
+##删
 dic1.pop("name")
 del dic1["age"]
 dic1.clear()
