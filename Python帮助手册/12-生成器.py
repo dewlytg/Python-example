@@ -60,7 +60,7 @@ class Zrange:
         self.n = n
 
     def __iter__(self):
-        return ZrangeIterator (self.n)
+        return ZrangeIterator(self.n)
 
 class ZrangeIterator:
     def __init__(self, n):
@@ -78,7 +78,7 @@ class ZrangeIterator:
         else:
             raise StopIteration ()
 
-zrange = Zrange (3)
+zrange = Zrange(3)
 print zrange
 print iter(zrange)
 print zrange is iter(zrange)
@@ -173,8 +173,11 @@ def Zrange(n):
 
 zrange = Zrange(5)
 
+print
 print zrange.next()
+print
 print zrange.next()
+print
 print zrange.send("Hello")
 zrange.close()
-print zrange.send("world")
+#print zrange.send("world")

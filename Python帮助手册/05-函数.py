@@ -2,9 +2,7 @@
 
 """
 普通函数和lambda函数，print和return，print是当前终端显示结果，而return则是保留结果到一个对象中，如果没有return值，默认是None
-注意函数名称一般都是小写单词组成，多个单词之间用下划线_连接
 """
-
 #无参数函数定义
 def myfun1():
     print "My function"

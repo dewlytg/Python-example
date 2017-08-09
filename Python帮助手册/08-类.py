@@ -2,7 +2,6 @@
 
 """
 class encapsulation, polymorphism, inheritance
-类的命名规范，首字母大写，驼峰式，比如:MyClass
 """
 #1)类的详解:
 class Student(object):
