@@ -63,13 +63,13 @@ f.close ()
 
 # 创建gzip文件:
 content = "Lots of content here"
-f = gzip.open ('file.txt.gz', 'wb')
-f.write (content)
-f.close ()
+f = gzip.open('file.txt.gz', 'wb')
+f.write(content)
+f.close()
 
 # gzip压缩现有文件:
-f_in = open ('file.txt', 'rb')
+f_in = open('file.txt', 'rb')
 f_out = gzip.open ('file.txt.gz', 'wb')
-f_out.writelines (f_in)
-f_out.close ()
-f_in.close ()
+f_out.writelines(f_in)
+f_out.close()
+f_in.close()
