@@ -35,7 +35,7 @@ cursor.execute(sql)
 cursor.close()
 db.close()
 
-##数据库插入操作,其他的改删操作以此类推
+##数据库插入操作,其他的改删操作一次类推
 
 # 打开数据库连接
 db = MySQLdb.connect("localhost","testuser","test123","TESTDB" )
