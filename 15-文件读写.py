@@ -49,3 +49,8 @@ f.close()
 with open("file.txt","r") as fd:
     for line in fd:
         print line
+
+with open('data') as fin,open('res','w') as fout:
+    for line in fin:
+        if 'some key' in line:
+            fout.write(line)
