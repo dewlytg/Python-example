@@ -12,8 +12,8 @@ C.__del__(self)                       析构器,通常释放内存的操作放�
 C.__str__(self)                       可打印的字符输出；内建str()及print语句
 C.__repr__(self)                      运行时的字符串输出；内建repr()  ''和操作符
 C.__unicode__(self)                   Unicode 字符串输出；内建unicode()
-C.__call__(self, *args)               表示可调用的实例
-C.__nonzero__(self)                   为object 定义False 值;内建bool() （从2.2 版开始）
+C.__call__(self, *args)               表示可调用的实例；内置callable()
+C.__nonzero__(self)                   为object 定义False 值;内建bool() （从2.2 版开始）类的__nonzero__方法用于将类转换为布尔值。通常在用类进行判断和将类转换成布尔值时调用
 C.__len__(self)                       长度（可用于类）;内建len()
 """
 class A:
@@ -28,21 +28,20 @@ class A:
         print "call __repr__"
         return "class A repr"
 
-    def __nozero__(self):
-        print "call __nozero__"
-        return 1
-
     def __len__(self):
         print "call __len__"
         return 1
+
+    def __nozero__(self):
+        print "call __nozero__"
+        return True
 
     def __unicode__(self):
         print "call __unicode__"
         return "class A unicode"
 
     def __call__(self, *args, **kwargs):
-        print "call __call__"
-        return "calss A callale"
+        return True
 
     def __del__(self):
         print "calll __del__"
@@ -53,8 +52,11 @@ print a
 print str(a)
 print repr(a)
 print len(a)
+print 'a is not zero' if a else 'A is zero'
 print bool(a)
+print unicode(a)
 print callable(a)
+print
 
 """
 __new__：创建对象时调用，返回当前对象的一个实例,相当于Java里面的构造器 一般是用于继承内置类的，返回值是一个对象

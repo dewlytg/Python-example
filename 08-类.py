@@ -8,7 +8,7 @@ class Student(object):
     """
     define a class for student
     """
-    ##类和对象都可以调用,私有属性和方法只能内部调用,定义私有属性和方法"_"或者"__",__slot__限制用户自定义属性
+    ##类属性,类和对象都可以调用,私有属性和方法只能内部调用,定义私有属性和方法"_"或者"__",__slot__限制用户自定义属性
     __slots__ = ("name","score","instance_attr","_instance_private","__instance_private","email")
     class_attr = "类属性"
     _class_private = "_ 私有类属性"
@@ -16,7 +16,7 @@ class Student(object):
 
     ##构造函数
     def __init__(self,name,score):
-        ##只有对象可以调用
+        ##实例属性,只有对象可以调用
         self.instance_attr = "实例属性"
         self._instance_private = "_ 实例私有属性"
         self.__instance_private = "__ 实例私有属性"

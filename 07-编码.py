@@ -14,3 +14,4 @@ content = u"中文"
 assert isinstance(content,unicode)
 f = codecs.open("./files/tmp.txt","w","utf-8")
 f.write(content)
+f.close()
