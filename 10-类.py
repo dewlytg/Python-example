@@ -142,3 +142,42 @@ if __name__ == "__main__":
     s.speak("b story")
     issubclass(SubClass,BaseClass)
     hasattr(s,"talk")
+
+#类接口技术
+"""
+Super           定义一个method函数已经在子类中期待一个动作的delegate
+Inheritor       没有提供任何新的变量名，因此会获得Super定义的一切内容
+Replacer        用自己的版本覆盖Super的method
+Extender        覆盖并回调默认method，从而定制Super的method
+Provider        实现Super的delegate方法预期的action方法
+"""
+class Super:
+    def method(self):
+        print "in Super.method"
+    def delegate(self):
+        self.action()
+
+class Inheritor(Super):
+    pass
+
+class Replacer(Super):
+    def method(self):
+        print "In Replacer.method"
+
+class Extender(Super):
+    def method(self):
+        print "starting Extender.method"
+        Super.method(self)
+        print "ending Extender.method"
+
+class Provider(Super):
+    def action(self):
+        print "in Provider.action"
+
+if __name__ == "__main__":
+    for klass in (Inheritor,Replacer,Extender):
+        print "\n" + klass.__name__ + "..."
+        klass().method()
+    print "\nProvider..."
+    x = Provider()
+    x.delegate()
