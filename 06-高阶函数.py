@@ -6,7 +6,8 @@ map,reduce,zip,filter,sorted,partical
 
 #1)map:
 ###map(function,iterable) function为函数，iterable是一个可迭代对象，返回值为列表类型
-
+S1 = "abc"
+S2 = "xyz123"
 
 def f(x):
     return x * x
@@ -16,6 +17,7 @@ print map(lambda x:x*x,[1,2,3,4,5,6,7,8,9])
 print map(str,[1,2,3,4,5,6,7,8,9])
 print map(str,[i for i in range(10)])
 print map(int,"123")
+print map(None,S1,S2)
 
 #2)reduce:
 ###reduce(function,iterable)  function为函数，iterable是一个可迭代对象
@@ -27,6 +29,7 @@ print reduce(add,[1,2,3,4,5,6,7,8,9])
 
 #3)zip:
 print zip(["name","age"],["James",23])
+print list(zip(S1,S2))
 
 #4)filter:
 ###filter(function,iterable) function为函数，iterable是一个可迭代对象，返回值为列表类型

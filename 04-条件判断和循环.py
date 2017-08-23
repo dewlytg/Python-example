@@ -2,6 +2,7 @@
 
 """
 if,for,while都可以使用else，for和while使用else的时候必须是正常结束循环才会触发else语句，注意使用not，and，or，is
+break:终止所有循环，continue:终止本次循环，pass:占位符
 """
 
 score = int(raw_input("Please input a number: "))
@@ -30,6 +31,8 @@ for i in range(10):
         continue
     elif i == 8:
         break
+    elif i == 6:
+        pass
     print i
 else:
     print "over cycle"
