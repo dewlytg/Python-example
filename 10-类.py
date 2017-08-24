@@ -181,3 +181,28 @@ if __name__ == "__main__":
     print "\nProvider..."
     x = Provider()
     x.delegate()
+
+#assert,abstract
+class Super:
+    def delegate(self):
+        self.action()
+
+    def action(self):
+        assert False,"action must be defined"
+
+X = Super()
+X.delegate()
+
+from abc import ABCMeta,abstractmethod
+class Super:
+    __metaclass__ = ABCMeta
+    def delegate(self):
+        self.action()
+
+    @abstractmethod
+    def action(self):
+        pass
+
+class Sub(Super):pass
+
+X = Sub()

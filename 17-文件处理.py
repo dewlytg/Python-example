@@ -54,3 +54,15 @@ with open('data') as fin,open('res','w') as fout:
     for line in fin:
         if 'some key' in line:
             fout.write(line)
+
+#matching file
+import glob
+print glob.glob("*.py")
+
+#remove dir which has some files
+import shutil
+shutil.rmtree("dir")
+
+#remove empty dir
+import os
+os.rmdir("dir")

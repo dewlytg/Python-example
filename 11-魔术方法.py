@@ -1,7 +1,7 @@
 #coding:utf-8
 
 """
-Python __func__ 魔术方法
+Python __func__ 魔术方法，重载方法，使对象看起来更像内置类型一样
 """
 
 ##基本定制
