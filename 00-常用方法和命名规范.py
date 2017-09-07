@@ -31,6 +31,7 @@ issubclass()    # 判断是否为子类
 isinstance()    # 判断是否为制定类的实例
 hasattr()       # 判断是否对象有制定属性
 hash()          # 所有不可变的类型都是可哈希的，因此它们都可以做为字典的键
+apply()         # apply(func,*args,**kwargs)
 
 """
 Python之父Guido推荐的规范
