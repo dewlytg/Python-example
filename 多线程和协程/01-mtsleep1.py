@@ -21,7 +21,7 @@ def main():
     print "all DONE at:",ctime()
 
 if __name__ == '__main__':
-        main()
+    main()
 
 """
 starting at: Thu Sep  7 15:31:07 2017
