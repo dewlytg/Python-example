@@ -1,5 +1,12 @@
 #!/usr/bin/env python
 
+"""
+cs = socket()              # 创建客户套接字
+comm_loop:                 # 通讯循环
+cs.sendto()/cs.recvfrom()  # 对话（发送／接收）
+cs.close()                 # 关闭客户套接字
+"""
+
 from socket import *
 
 HOST = "localhost"
