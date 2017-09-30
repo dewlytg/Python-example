@@ -18,8 +18,9 @@ py3_str = str1.encode("bytes")      python3中需要把字符串再次编码成b
 u1 = u"中国"      这样定义的字符串是unicode，因为前面加了u，即使我们赋的值是中文
 
 """
-
+import sys
 import codecs
+print sys.getdefaultencoding()
 
 u = u'中文'                  #显示指定unicode类型对象u
 str1 = u.encode('gb2312')    #以gb2312编码对unicode对像进行编码
