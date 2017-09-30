@@ -11,6 +11,7 @@ gbk,euc,koi8        各国语言的不同编码
 str1 = "中国"         这样定义的字符串是UTF-8，因为第一行coding指定了
 str_to_unicode = str1.decode("utf-8")       字符串只能解码变成unicode编码，小括号内要指定字符串现在的编码
 unicode_to_gbk = str_to_unicode.encode("gbk")       unicode又变成括号内指定的编码
+py3_str = str1.encode("bytes")      python3中需要把字符串再次编码成bytes
 
 上述例子可以看出unicode的重要性，它是字符集转换的中间集，也是支持全世界所有字符集的根本
 
