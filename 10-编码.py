@@ -14,6 +14,8 @@ unicode_to_gbk = str_to_unicode.encode("gbk")       unicode又变成括号内指
 
 上述例子可以看出unicode的重要性，它是字符集转换的中间集，也是支持全世界所有字符集的根本
 
+u1 = u"中国"      这样定义的字符串是unicode，因为前面加了u，即使我们赋的值是中文
+
 """
 
 import codecs
