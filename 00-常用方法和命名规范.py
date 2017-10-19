@@ -1,5 +1,18 @@
 #coding:utf-8
 
+"""
+包：创建一个包，就是创建一个包含__init__.py文件的文件夹，必须包含__init__.py文件，import package 相当于导入了包中的__init__.py文件
+模块：创建一个模块，就是创建一个.py的文件，import module 相当于导入了模块中的所有代码
+
+import package
+import module
+import module as Mod
+from module import func
+from module import *
+from module import func1,func2
+from module import fun1 as Fun
+"""
+
 type()          # 查询对象类型
 id()            # 查询对象在内存中的位置
 help()          # 获取帮助
@@ -48,3 +61,56 @@ Method Names                lower_with_under() 	                    _lower_with_
 Function/Method Parameters  lower_with_under
 Local Variables             lower_with_under
 """
+#可迭代对象中所有元素为真即为真
+print all([0,-1,2])
+print all([1,2,3])
+
+#可迭代对象中任意一个元素为真即为真
+print any([0,-1,2])
+print any([])
+
+#对象转换为字符串，类似repr
+print type(ascii([1,2,3])),[ascii([1,2,3])]
+
+#十进制转二进制
+print bin(255)
+
+#返回可迭代对象的bool值
+print bool([1])
+print bool([])
+
+#字符串转换为字节
+a = bytes("abcde",encoding="utf-8")
+b = bytearray("abcde",encoding="utf-8")
+print b[1]
+b[1] = 50
+print b
+
+#判断对象是否可以调用
+print callable(abs)
+print callable([])
+
+#输入数字返回ascii code
+print chr(97)
+
+#输入ascii code返回数字
+print ord("a")
+
+#编译字符串代码执行
+code = "for i in range(10):print(i)"
+print code
+c = compile(code,"","exec")
+exec(c)
+
+#打印全局变量
+print globals()
+
+#打印函数内变量
+def test():
+    local_var = 22
+    print locals()
+test()
+
+#导入模块
+import re
+__import__("re")

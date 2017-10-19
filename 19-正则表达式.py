@@ -93,3 +93,6 @@ print r"me.expand(r'\2 \1\3'):",m.expand(r'\2 \1\3')
 #3) split
 p = re.compile(r"\d+")
 print p.split("one1two2three3four4")
+
+#4) sub
+print re.sub("[0-9]+","|","ab12cd3ef55g")

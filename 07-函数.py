@@ -2,6 +2,7 @@
 
 """
 普通函数和lambda函数，print和return，print是当前终端显示结果，而return则是保留结果到一个对象中，如果没有return值，默认是None
+理解函数即变量
 """
 #无参数函数定义
 def myfun1():
@@ -35,3 +36,12 @@ lam1 = lambda x,y:x+y
 lam2 = lambda x:x % 2
 print lam1(2,3)
 print lam2(10)
+
+##递归函数
+def calc(n):
+    print(n)
+    if int(n/2) > 0:
+        return calc(int(n/2))
+    print("-->",n)
+
+calc(10)
