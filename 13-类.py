@@ -112,6 +112,76 @@ print Student.__doc__
 print stu01.__class__
 print stu02.__class__.__bases__
 print stu01
+#############################################################################################
+#__metaclass__ 和 __new__
+#__new__是用来创建实例的特殊方法
+class MyType(type):
+    def __init__(self,what,bases=None,dict=None):
+        print "---MyType init---"
+        super(MyType,self).__init__(what,bases,dict)
+
+    def __call__(self, *args, **kwargs):
+        print "---MyType call---"
+        obj = self.__new__(self,*args,**kwargs)
+        self.__init__(obj,*args,**kwargs)
+
+class Foo(object):
+    __metaclass__ = MyType
+
+    def __init__(self,name):
+        self.name = name
+        print "Foo ---init---"
+
+    def __new__(cls, *args, **kwargs):
+        print "Foo ---new---"
+        return object.__new__(cls)
+
+obj = Foo("dewly")
+#print obj.name
+#############################################################################################
+#通过type定义类
+def __init__(self,name,age):
+    self.name = name
+    self.age = age
+
+def func(self):
+    print "Define a new class by type"
+    print "hello,%s" % self.name
+
+Foo = type("Foo",(object,),{"__init__":__init__,"talk":func})
+f = Foo("james",22)
+f.talk()
+#############################################################################################
+#反射，通过字符串调用类的属性调用
+"""
+hasattr: 根据提供的字符串判断对象是否有相应的属性，此属性可以是变量也可以是方法
+getattr: 根据提供的字符串获取指定对象的属性，如果是变量则返回变量值，如果是方法则放回方法对象的内存地址
+setattr: 根据提供的字符串定义一个新的属性，如果属性存在就覆盖原有属性
+delattr: 根据提供的字符串删除指定属性
+"""
+def talk(self):
+    print "%s is talking...."%self.name
+
+class Dog(object):
+    def __init__(self,name):
+        self.name = name
+
+    def bark(self):
+        print "%s is barking..."%self.name
+
+d = Dog("duoduo")
+print hasattr(d,"name")
+print hasattr(d,"bark")
+print hasattr(d,"talk")
+result = getattr(d,"name")
+func = getattr(d,"bark")
+print result
+func()
+setattr(d,"talk",talk)
+d.talk(d)
+delattr(d,"name")
+print d.name
+
 
 #############################################################################################
 #2)继承:
@@ -143,6 +213,7 @@ if __name__ == "__main__":
     issubclass(SubClass,BaseClass)
     hasattr(s,"talk")
 
+#############################################################################################
 #类接口技术
 """
 Super           定义一个method函数已经在子类中期待一个动作的delegate
@@ -182,6 +253,7 @@ if __name__ == "__main__":
     x = Provider()
     x.delegate()
 
+#############################################################################################
 #assert,abstract
 class Super:
     def delegate(self):
