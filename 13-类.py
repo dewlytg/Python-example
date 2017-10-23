@@ -139,6 +139,33 @@ class Foo(object):
 obj = Foo("dewly")
 #print obj.name
 #############################################################################################
+#属性方法传值
+class Dog(object):
+    def __init__(self,name):
+        self.name = name
+        self.__food = None
+
+    @property
+    def eat(self):
+        print "%s eat... %s" %(self.name,self.__food)
+
+    @eat.setter
+    def eat(self,food):
+        print "%s eat %s" %(self.name,food)
+        self.__food = food
+
+    @eat.deleter
+    def eat(self):
+        del self.__food
+        print "delete __food"
+
+d = Dog("small")
+d.eat #执行属性方法
+d.eat = "骨头" #执行eat.setter
+d.eat #执行属性方法
+del d.eat #执行eat.deleter
+#d.eat
+############################################################################################
 #通过type定义类
 def __init__(self,name,age):
     self.name = name
