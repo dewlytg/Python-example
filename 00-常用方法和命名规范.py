@@ -69,8 +69,8 @@ print all([1,2,3])
 print any([0,-1,2])
 print any([])
 
-#对象转换为字符串，类似repr
-print type(ascii([1,2,3])),[ascii([1,2,3])]
+#python3,对象转换为字符串，类似repr
+#print(type(ascii([1,2,3])),[ascii([1,2,3])])
 
 #十进制转二进制
 print bin(255)
@@ -79,12 +79,27 @@ print bin(255)
 print bool([1])
 print bool([])
 
-#字符串转换为字节
-a = bytes("abcde",encoding="utf-8")
-b = bytearray("abcde",encoding="utf-8")
-print b[1]
-b[1] = 50
-print b
+##字符串
+s = "中文"
+print(s)
+print(type(s))
+
+##python3
+##字符串转换为字节，必须声明编码类型，utf-8三个字符串代表一个中文
+#b =  bytes(s,encoding='utf-8')
+#print(b)
+#print(type(b))
+
+##字节转换为字符串，也要声明编码类型，因为bytes字节才知道以哪种方式去解码
+#s1 = str(b,encoding='utf-8')
+#print(s1)
+
+##字符串转换为字节，必须声明编码类型，gbk二个字符串代表一个中文
+#b1 = bytes(s1,encoding="gbk")
+#print(b1)
+
+#s2 = str(b1,encoding='gbk')
+#print(s2)
 
 #判断对象是否可以调用
 print callable(abs)

@@ -17,13 +17,15 @@ class SshClass ():
     def __init__(self, hostname, username, password, port):
         self.hostname = hostname
         self.username = username
-        self.password = password
+        self.password = password #密码登录
+        #self.private_key = paramiko.RSAKey.from_private_key_file("id_rsa") #秘钥登录
         self.port = port
 
     def ssh_command(self, execcommand):
         ssh = paramiko.SSHClient()
         ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
         ssh.connect(self.hostname, port=self.port, username=self.username, password=self.password)
+        #ssh.connect (self.hostname, port=self.port, username=self.username, pkey=self.private_key)
         stdin, stdout, stderr = ssh.exec_command(execcommand)
         ret = stdout.readlines()
         ssh.close()
@@ -46,7 +48,6 @@ class SshClass ():
         localpath = local
         sftp.get(remotepath, localpath)
         t.close()
-
 
 if __name__ == "__main__":
     s1 = SshClass(hostname, username, password, port)

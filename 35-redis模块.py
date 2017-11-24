@@ -22,6 +22,13 @@ r.setrange("name",1,"z")# 修改字符串内容，从指定字符串索引开始
 print r.get("name")
 r.setrange("name",6,"zzzzzzz")
 print r.get("name")
+r.setbit("n1",1000,1) #设置第1000bit位的值为1，使用ord,bin查看,r.setbit()
+r.getbit("n1",1000) #获取第1000bit位的值
+r.bitcount("n1") #统计bit位上为1的个数
+"""
+注：如果在Redis中有一个对应： n1 = "foo"，那么字符串foo的二进制表示为：01100110 01101111 01101111所以，如果执行 setbit('n1', 7, 1)，则就会将第7位设置为1，
+    那么最终二进制则变成 01100111 01101111 01101111，即："goo
+"""
 
 
 #2 Hash 操作redis中的Hash 在内存中类似于一个name对应一个dic来存储

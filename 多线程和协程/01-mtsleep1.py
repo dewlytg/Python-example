@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+#coding:utf-8
 
 import thread
 from time import sleep,ctime

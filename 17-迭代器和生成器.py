@@ -85,7 +85,7 @@ class ZrangeIterator:
             self.i += 1
             return i
         else:
-            raise StopIteration ()
+            raise StopIteration()
 
 zrange = Zrange(3)
 print zrange
