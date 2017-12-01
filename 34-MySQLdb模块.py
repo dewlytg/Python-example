@@ -1,5 +1,9 @@
 #coding:utf-8
 
+"""
+查询不需要commit，修改需要commit或者rollback，都是事物
+"""
+
 import MySQLdb
 
 # 打开数据库连接
