@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div style="height: 35px;width:400px;position: relative;">
+        <!--使用padding-right和width结合使用来现在用户在输入框中最右边的图片位置不输入-->
+        <input type="text" style="height: 35px;width: 380px;padding-right: 30px;" />
+        <!--position:absolute 必须和 position:relative 一起使用，而且是嵌套关系，使用后要指定位置top ,bottom ,left ,right-->
+        <span style="position: absolute; right: 11px; top:10px; background-image: url(i_name.jpg);height: 16px;width:16px;display: inline-block;"></span>
+
+    </div>
+
+</body>
+</html>
