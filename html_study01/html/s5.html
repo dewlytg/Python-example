@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <form enctype="multipart/form-data">
+        <div>
+            <input type="text" name="user">
+            <p>请选择性别：</p>
+            <!--单选框radio，通过name来互斥，默认被选中-->
+            男：<input type="radio" name="gender" value="1" checked="checked">
+            女：<input type="radio" name="gender" value="2">
+            <p>爱好</p>
+            <!--复选框-->
+            篮球：<input type="checkbox" name="favor" value="1" checked="checked">
+            足球：<input type="checkbox" name="favor" value="2">
+            排球：<input type="checkbox" name="favor" value="3">
+            网球：<input type="checkbox" name="favor" value="4">
+            台球：<input type="checkbox" name="favor" value="5">
+            <!--上传文件，必须在表单中添加enctype="multipart/form-data"属性-->
+            <p>上传文件</p>
+            <input type="file" name="fname"/>
+        </div>
+
+        <!--多行输入-->
+        <textarea name="multi">默认值</textarea>
+
+        <!--下拉列表-->
+        <select name="city" size="10" multiple="multiple">
+            <option value="1">北京</option>
+            <option value="2">上海</option>
+            <option value="3" selected="selected">广州</option>
+            <option value="4">深圳</option>
+        </select>
+
+        <input type="submit" value="提交" />
+        <input type="reset" value="重置" />
+    </form>
+</body>
+</html>

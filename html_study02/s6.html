@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <!--第一层 通过z-index来设置哪一层在上面 display: none; 可以让层消失 如果使用百分比的话,整个div只有左上角的点是居中,那么可以通过margin的设定来调整-->
+    <div style=" z-index:10; position: fixed;top:50%; left: 50%; margin-left: -250px; margin-top:-200px; background-color: white;height: 400px;width: 500px;">
+        
+        <input type="text"></input>
+    </div>
+
+    <!--第二层-->
+    <!--opacity透明度-->
+    <div style=" z-index: 9;position: fixed;background-color: black;
+    top:0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    opacity: 0.5;
+    ">
+
+    </div>
+
+    <!--第三层-->
+    <div style="background-color: green;height: 5000px;">
+    abcefg
+    </div>
+</body>
+</html>

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="font-awesome-4.7.0/css/font-awesome.css">
+    <style>
+        .left{
+            float: left;
+        }
+        .right{
+            float: right;
+        }
+        .pg-header{
+            margin: -8px;
+            height:48px;
+            background-color: #2459a2;
+            color:white;
+            line-height: 48px;
+        }
+        .pg-header .logo{
+            width:200px;
+            background-color: cadetblue;
+            text-align: center;
+        }
+        .pg-header .icons{
+            padding: 0 20px;
+        }
+        .pg-header .icons:hover{
+            background-color: blue;
+        }
+        .pg-header .user{
+            margin-right: 60px;
+            padding:0 20px;
+            height: 48px;
+            color: white;
+        }
+        .pg-header .user:hover{
+            background-color: #204982;
+        }
+        .pg-header .user .b{
+            z-index: 20;
+            position: absolute;
+            top:48px;
+            right:44px;
+            background-color: white;
+            color: black;
+            width:160px;
+            display: none;
+        }
+        .pg-header .user:hover .b{
+            display: block;
+        }
+        .pg-header .user .b a{
+            display: block;
+        }
+        .pg-header .user .a img{
+            height: 40px;
+            width:40px;
+            margin-top: 4px;
+            border-radius: 50%
+        }
+        .pg-content .menu{
+            position: absolute;
+            top:48px;
+            left: 0;
+            bottom: 0;
+            width:200px;
+            background: #dddddd;
+        }
+        .pg-content .content{
+            z-index: 19;
+            position: absolute;
+            top: 48px;
+            right: 0;
+            bottom: 0;
+            left: 200px;
+            /*background: purple;*/
+            overflow: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="pg-header">
+        <div class="logo left">
+            老男孩
+        </div>
+
+        <div class="user right">
+            <a class="a" href="#">
+                <img src="0.jpg"/>
+            </a>
+            <div class="b">
+                <a>我的资料</a>
+                <a>注销</a>
+            </div>
+        </div>
+        <div class="icons right">
+            <i class="fa fa-bell-o" aria-hidden="true"></i>
+        </div>
+        <div class="icons right">
+            <i class="fa fa-comment" aria-hidden="true"></i>
+            <span>5</span>
+        </div>
+    </div>
+
+    <div class="pg-content">
+        <div class="menu left">
+            a
+        </div>
+        <div class="content left">
+            <div style="background-color: purple;">
+                <p style="margin: 0;">abc</p><p>abc</p><p>abc</p><p>abc</p><p>abc</p><p>abc</p><p>abc</p><p>abc</p>
+                <p>abc</p><p>abc</p><p>abc</p><p>abc</p><p>abc</p><p>abc</p><p>abc</p><p>abc</p>
+                <p>abc</p><p>abc</p><p>abc</p><p>abc</p><p>abc</p><p>abc</p><p>abc</p><p>abc</p>
+                <p>abc</p><p>abc</p><p>abc</p><p>abc</p><p>abc</p><p>abc</p><p>abc</p><p>abc</p>
+                <p>abc</p><p>abc</p><p>abc</p><p>abc</p><p>abc</p><p>abc</p><p>abc</p><p>abc</p>
+                <p>abc</p><p>abc</p><p>abc</p><p>abc</p><p>abc</p><p>abc</p><p>abc</p><p>abc</p>
+            </div>
+        </div>
+    </div>
+    <div class="pg-footer"></div>
+</body>
+</html>

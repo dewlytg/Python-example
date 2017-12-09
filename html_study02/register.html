@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .c1{
+            width:1350px;
+            height:20px;
+            margin:0 auto;
+            background-color: #c3c3c3;
+            position: fixed;
+            top:0;
+            left:0;
+            right:0;
+            line-height: 20px;
+        }
+        .c2{
+            color:gray;
+        }
+        .c1 .c2:hover{
+            background-color: #2459a2;
+        }
+    </style>
+</head>
+<body>
+    <div id="pg-header" class="c1">
+        <div class="c2" style="float: left;margin-left: 200px;">
+            *收藏本站
+        </div>
+        <div  style="float: right;margin-right: 100px;">
+            <span class="c2">登录</span>
+            <span class="c2">免费注册</span>
+            <span class="c2">我的订单</span>
+            <span class="c2">VIP会员俱乐部</span>
+            <span class="c2">客户服务</span>
+        </div>
+    </div>
+
+    <div id="pg-top"style="width: 1350px;height: 100px;line-height: 120px;margin-top: 20px;">
+        <div style="background-image: url(logo.png);width: 154px;height: 88px;margin-left: 180px;"></div>
+    </div>
+
+    <div id="pg-body" style="width:1000px;height: 500px; margin: 0 auto ;border: 1px solid #b9b9b9; position: relative;">
+        <div style="width:200px;height: 35px;position: absolute; top:30px;left: 30px; font-weight: bold;font-size:26px;">
+            新注册用户
+        </div>
+         <div style="width: 300px; height: 30px; position: absolute;top:80px;left: 70px;">
+            <span style="color:red;">*</span>用户名：<input type="text" style="width:200px;height: 30px;">
+        </div>
+        <div style="width: 300px; height: 30px; position: absolute;top:140px;left: 70px;">
+            <span style="color:red;">*</span>手机号：<input type="text" style="width:200px;height: 30px;">
+        </div>
+        <div style="width: 300px; height: 30px; position: absolute;top:200px;left: 52px;">
+            <span style="color:red;">*</span>登录密码：<input type="password" style="width:200px;height: 30px;">
+        </div>
+        <div style="width: 300px; height: 30px; position: absolute;top:260px;left: 52px;">
+            <span style="color:red;">*</span>确认密码：<input type="password" style="width:200px;height: 30px;">
+        </div>
+        <div style="width: 300px; height: 30px; position: absolute;top:320px;left: 68px;">
+            <span style="color:red;">*</span>验证码：<input type="text" style="width:90px;height: 30px;">
+        </div>
+        <div style="width: 300px; height: 20px; position: absolute;top:370px;left: 135px;font-size: small;">
+            <input type="checkbox" checked="checked">我已阅读并同意 <a style="color: blue;">&lt;&lt;用户注册协议&gt;&gt;</a>
+        </div>
+        <div style="width: 300px;height: 40px;position: absolute;top: 410px;left: 140px;">
+            <input type="submit" value="同意以上协议并注册" style="background-color: red; width: 210px;height: 35px;color:white;">
+        </div>
+        <div style="width: 200px;height: 50px;position: absolute;top:10px;right: 20px;">
+            我已注册，现在就<a style="color:blue;">登录</a>
+        </div>
+    </div>
+</body>
+</html>

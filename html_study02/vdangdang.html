@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .c1:hover{
+            border: 2px solid #ff46af;
+        }
+        .c2{
+            background-color: black;
+        }
+        .c3{
+            background-color: #ff46af;
+        }
+    </style>
+</head>
+<body>
+    <div class="c1" style="background-image: url(vdangdang01.jpg); width :820px;height: 229px;position: relative;" onmouseover="ChangeRed();" onmouseleave="ChangeBlack();">
+        <div style="background-image: url(vdangdang02.jpg);background-repeat: no-repeat; width: 230px;height: 75px;position: absolute;top:0;left: 0;">
+        </div>
+        <div style="position: absolute;top:75px;left: 40px;color:#9f9f9f;">源自欧洲品牌设计</div>
+        <div style="position: absolute;bottom: 30px;left: 0;width: 230px;height: 30px;color:#ff46af;line-height: 30px; text-align:center;">全场买三免一</div>
+        <div id="i1" class="c2" style=" position: absolute;bottom: 0;left: 0;width: 230px;height: 30px;color:white;font-weight: bold;line-height: 30px; text-align:center;">英格里奥&nbsp;双12大促</div>
+    </div>
+
+<script>
+    function ChangeRed() {
+        tag = document.getElementById("i1");
+        tag.classList.remove("c2");
+        tag.classList.add("c3");
+    }
+    function ChangeBlack() {
+        tag = document.getElementById("i1");
+        tag.classList.remove("c3");
+        tag.classList.add("c2");
+    }
+</script>
+</body>
+</html>
