@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -28,4 +29,34 @@
     abcefg
     </div>
 </body>
+=======
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <!--第一层 通过z-index来设置哪一层在上面 display: none; 可以让层消失-->
+    <div style=" z-index:10; position: fixed;top:50%; left: 50%; margin-left: -250px; margin-top:-200px; background-color: white;height: 400px;width: 500px;">
+        
+        <input type="text"></input>
+    </div>
+
+    <!--第二层-->
+    <!--opacity透明度-->
+    <div style=" z-index: 9;position: fixed;background-color: black;
+    top:0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    opacity: 0.5;
+    ">
+
+    </div>
+    <div style="background-color: green;height: 5000px;">
+    abcefg
+    </div>
+</body>
+>>>>>>> b83fbe129461e9bf74524352aa024a9e9ce9b233
 </html>
