@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .hide{
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <input id="i2" type="checkbox">
+    <input id="i1" type="button" value="开关"/>
+    <div class="c1 hide">aaaaaaaa</div>
+
+    <script src="jquery-1.12.4.js"></script>
+
+    <script>
+        $("#i1").click(function () {
+//            if($(".c1").hasClass("hide")){
+//                $(".c1").removeClass("hide");
+//            }else{
+//                $(".c1").addClass("hide");
+//            }
+            //开关
+            $(".c1").toggleClass("hide");
+        })
+        // 专门用于做自定义属性
+        //$(..).attr("n")
+        //$(..).attr("n","v")
+        //$(..).removeAttr("n")
+
+        //专门用户checkbox,radio
+        //$(..).prop("checked")
+        //$(..).prop("checked",true)
+    </script>
+</body>
+</html>

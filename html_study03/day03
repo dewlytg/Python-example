@@ -1,0 +1,64 @@
+样式操作
+    classList
+        classList.add
+        classList.remove
+
+     obj.style.fontSize = "16px";
+     obj.style.backgroundColor = "red";
+     obj.style.color = "red";
+
+属性操作
+     attributes
+        getAttribute
+        removeAttribute
+
+创建标签，并添加到HTML中
+    字符串形式
+
+    对象形式
+    document.createElement("div")
+
+提交表单
+    任何标签都可以通过DOM提交表单
+
+    document.getElementById("form").sumbit()
+
+其他
+    console.log()
+    alert
+    var v = confirm(消息) v:true false
+
+    location.href  获取当前页面url
+    location.href = "" #重定向 跳转
+    location.reload  页面刷新
+
+    var obj = setInterval(function(){};5000)
+    clearInterval(obj)
+
+    var obj = setTimeout(function(){};5000)
+    clearTimeout(obj)
+
+
+事件
+    onclick onblur onfocus
+    行为 样式 结构
+    js   css  html
+
+    绑定事件的两种方式：
+        a.直接标签绑定 onclick="function();"
+        b.先获取Dom对象，然后进行绑定
+           document.getElementById("xx").onclick
+           document.getElementById("xx").onfocus
+
+         this，当前触发事件的标签
+            a.第一种绑定方式
+                <input type="button" onclick="ClickOn(this)"/>
+                function ClickOn(self){
+                    //self当前点击的标签
+                }
+
+            b.第二种绑定方式
+                <input id="i1" type="button"/>
+                document.getElementById("i1").onclick = function(){
+                   //this代指当前点击的标签
+                }

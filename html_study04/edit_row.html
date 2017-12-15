@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+    <style>
+        .header{
+            margin-top: 20px;
+            margin-left: 20px;
+            z-index: 8;
+        }
+        .header span{
+            background-color: lightgray;
+            display: inline-block;
+            width: 120px;
+            height: 25px;
+            text-align: center;
+            line-height: 25px;
+        }
+
+    </style>
+<body>
+    <div class="header">
+        <input id="i1" type="button" value="全选"/>
+        <input id="i2" type="button" value="反选"/>
+        <input id="i3" type="button" value="取消"/>
+        <span id="s1">进入编辑模式</span>
+        <table border="1px;" style="margin-top: 10px;">
+            <thead>
+                <tr>
+                    <th>选择</th>
+                    <th>主机名</th>
+                    <th>端口</th>
+                    <th>状态</th>
+                </tr>
+            </thead>
+            <tbody id="t1">
+                <tr>
+                    <td><input type="checkbox"></td>
+                    <td>v1</td>
+                    <td>80</td>
+                    <td>在线</td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox"></td>
+                    <td>v2</td>
+                    <td>80</td>
+                    <td>在线</td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox"></td>
+                    <td>v3</td>
+                    <td>80</td>
+                    <td>在线</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="modal"></div>
+
+
+    <script src="jquery-1.12.4.js"></script>
+    <script>
+        $("#s1").click(function () {
+            $(this).css("backgroundColor","yellow");
+            $(":checkbox").each(function () {
+                if($(this).prop("checked")){
+                    var tds = $(this).parent().siblings();
+                    tds.each(function () {
+                        var text = $(this).text()
+                        $(this).text("");
+                        var tag = document.createElement("input");
+                        tag.innerHTML = text;
+                        $(tag).attr("type","text");
+                        $(tag).attr("value",text);
+                        $(this).append(tag);
+
+                   })
+                }else{
+                    console.log(2);
+                }
+            })
+
+        })
+        $("#i1").click(function () {
+            $(":checkbox").prop("checked",true);
+        })
+        $("#i2").click(function () {
+            $(":checkbox").each(function () {
+                var v = $(this).prop("checked")?false:true;
+                $(this).prop("checked",v);
+            })
+        })
+        $("#i3").click(function () {
+            $(":checkbox").prop("checked",false);
+        })
+    </script>
+</body>
+</html>
