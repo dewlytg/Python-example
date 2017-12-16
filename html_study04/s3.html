@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<style>
+    .header{
+        background-color: black;
+        color:wheat;
+    }
+    .content{
+        min-height:50px;
+    }
+    .hide{
+        display: none;
+    }
+</style>
+<body>
+    <div style="height: 400px;width: 200px;border: 1px solid #dddddd;">
+        <div class="item">
+            <div class="header">标题一</div>
+            <div class="content">内容</div>
+        </div>
+        <div class="item">
+            <div class="header">标题二</div>
+            <div class="content hide">内容</div>
+        </div>
+        <div class="item">
+            <div class="header">标题三</div>
+            <div class="content hide">内容</div>
+        </div>
+        <div class="item">
+            <div class="header">标题四</div>
+            <div class="content hide">内容</div>
+        </div>
+    </div>
+
+    <script src="jquery-1.12.4.js"></script>
+    <script>
+        $(".header").click(function () {
+            //当前点击的标签$(this)
+            //获取某个标签的下一个标签
+            //获取某个标签的父标签
+            //获取所有的兄弟标签
+            //添加样式和移除样式
+            //$("#i1").addClass("hide")
+            //$("#i1").removeClass("hide")
+            //筛选器
+            /*
+            $(this).next()   下一个
+            $(this).prev()   上一个
+            $(this).parent()  父标签
+            $(this).children() 子标签
+            $(this).sibling()  兄弟标签
+            $(this).find()  子子孙孙查找
+
+            $(this).next().removeClass("hide");
+            $(this).parent().siblings().find(".content").addClass("hide");
+            */
+            $(this).next().removeClass("hide").parent().siblings().find(".content").addClass("hide");
+        })
+    </script>
+</body>
+</html>

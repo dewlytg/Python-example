@@ -24,5 +24,25 @@
         </div>
         <div class="b">456</div>
     </div>
+
+    <script>
+        //普通函数
+        function func1() {
+
+        }
+        //匿名函数
+        function func2(arg) {
+            return arg + 1
+        }
+        setInterval("func2();",5000)
+        //自执行函数(创建函数并且自动执行)
+        function func3(arg){
+            console.log(arg);
+        }
+        //func3(1)
+        (function(arg){
+            console.log(arg);
+        })(1)
+    </script>
 </body>
 </html>

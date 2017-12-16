@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+    <style>
+        #d1{
+            background: red;
+            width: 300px;
+            height: 400px;
+        }
+    </style>
+<body>
+    <!--行为，结构，样式想分离-->
+    <!--<div id="d1" onclick="f1();">-->
+    <div id="d1">
+        asdf
+    </div>
+    <script>
+//        function f1() {
+//            console.log("abcefg");
+//        }
+        var mydiv = document.getElementById("d1");
+//        mydiv.onclick = function () {
+//            console.log("abcefg")
+//        }
+//        mydiv.onclick = function () {
+//            console.log("hello");
+//        }
+//        console.log(mydiv);
+//        绑定多个事件
+        mydiv.addEventListener("click",function(){console.log("abc")},false);
+        mydiv.addEventListener("click",function(){console.log("hello")},false);
+
+    </script>
+</body>
+</html>

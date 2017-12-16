@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+    <style>
+
+    </style>
+<body>
+<table border="1px" width="300px;">
+    <tr onmouseover="mouseOver(0);" onmouseout="mouseOut(0);">
+        <td>1</td>
+        <td>2</td>
+        <td>3</td>
+    </tr>
+    <tr onmouseover="mouseOver(1);" onmouseout="mouseOut(1);">
+        <td>1</td>
+        <td>2</td>
+        <td>3</td>
+    </tr>
+    <tr onmouseover="mouseOver(2);" onmouseout="mouseOut(2);">
+        <td>1</td>
+        <td>2</td>
+        <td>3</td>
+    </tr>
+</table>
+    <script>
+        function mouseOver(n) {
+            var myTrs = document.getElementsByTagName("tr")[n];
+            myTrs.style.backgroundColor = "red";
+        }
+        function mouseOut(n) {
+            var myTrs = document.getElementsByTagName("tr")[n];
+            myTrs.style.backgroundColor = "";
+        }
+    </script>
+</body>
+</html>
