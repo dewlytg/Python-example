@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div style="margin: 0 auto">
+        <div style="height: 48px;background-color: #dddddd">
+
+        </div>
+        <div>
+            <form action="/home" method="post">
+                <input name="user" type="text" placeholder="用户名"/>
+                <input name="pwd" type="text" placeholder="密码"/>
+                <input name="email" type="text" placeholder="邮箱"/>
+                <input type="submit" value="提交"/>
+            </form>
+
+        </div>
+        <table>
+                {% for row in user_list %}
+                    <tr>
+                        <td>{{ row.username }}</td>
+                        <td>{{ row.password }}</td>
+                        <td>{{ row.email }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+    </div>
+</body>
+</html>

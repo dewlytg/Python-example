@@ -1,0 +1,112 @@
+1.安装django
+    pip install django
+    easy_install django
+
+2.开始创建第一个项目
+    django-admin startproject mysite
+    # 生成目录结构如下
+    mysite
+        - mysite        # 对整个程序进行配置
+            - __init__.py
+            - settings.py  # 配置文件
+            - urls.py      # URL对应关系
+            - wsgi.py      # 遵循WSGI规范，一般使用 uwsgi + nginx
+        - manage.py        # 管理Django程序
+
+3.运行Django功能
+    python manage.py  # 或如下
+    python manage.py runserver 0.0.0.0:8000
+    python manage.py createsuperuser #创建管理员账号
+
+4.创建app
+
+    app目录结构
+    migrations     # django orm框架，修改表结构的操作记录（差异化）
+    __init__       # python3中有没有都一样，python2中必须有
+    admin          # Django为我们提供的后台管理
+    apps           # 配置当前app
+    models         # ORM：写指定的类，通过命令可以创建数据库结构
+    tests          # 单元测试
+    views          # ****业务代码****
+
+5.生成数据库表
+    python manage.py makemigrations
+    python manage.py migrate
+
+6.js css静态文件处理,页面里可能会包含css js文件，这些静态文件也需要引入进来,创建静态文件目录static，创建完之后还要在settings里面配置一下，最后面添加：
+    STATIC_URL = '/static/'
+    STATICFILES_DIRS = (
+        os.path.join(BASE_DIR,'static'),  # 必须加上都好"," 不加就报错
+    )
+
+    # html模板文件引用css js
+    <link rel="stylesheet" href="/static/commons.css" />
+
+7.获取用户请求信息并处理
+    注释掉CSRF
+    CSRF： 跨站请求伪造
+    settings —> 找到MIDDLEWARE —> 注释掉
+    # 'django.middleware.csrf.CsrfViewMiddleware',
+
+8.Django 请求 生命周期
+    1）客户端请求
+    2）路由系统：urls.py，路由关系映射
+    3）视图函数：app/views.py，功能函数
+    4）视图函数从DB等取数据，并嵌套到html中（html模板templates中）。渲染或组合，最终生成字符串返回给用户
+
+9.django内容整理
+
+    配置
+    1. 创建Django工程
+        django-admin startproject 工程名
+
+    2. 创建APP
+        cd 工程名
+        python manage.py startapp cmdb
+
+    3、静态文件
+        project.settings.py
+        STATICFILES_DIRS = (
+            os.path.join(BASE_DIR, "static"),
+        )
+
+    4、模板路径
+        DIRS ==>    [os.path.join(BASE_DIR,'templates'),]
+
+    5、settings中
+        middlerware
+        # 注释 csrf
+
+    使用
+    6、定义路由规则
+        urls.py
+        "login" --> 函数名
+
+    7、定义视图函数
+        app下views.py
+            def func(request):
+                # request.method   GET / POST
+            # 获取数据
+                # http://127.0.0.1:8009/home?nid=123&name=alex
+                # request.GET.get('',None)   # 获取请求发来的数据
+                # request.POST.get('',None)
+
+            # 返回数据
+                # return HttpResponse("字符串")
+                # return render(request, "HTML模板的路径")
+                # return redirect('/只能填URL')
+                # 只返回url地址，让客户端再次请求，不会把跳转的数据发给客户端
+                # redirect('/login')  前面的"/"代指本地url，前面的域名端口
+
+     模板渲染
+     8、模板渲染
+        特殊的模板语言
+        html文件中
+        {{ 变量名 }}
+        {% for item in infolist %}
+        {% endfor %}
+        {% if name=="lisi" %}
+        {% elseif %}
+        {% else %}
+        {% endif %}
+
