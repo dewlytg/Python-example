@@ -18,7 +18,11 @@
     python manage.py runserver 0.0.0.0:8000
     python manage.py createsuperuser #创建管理员账号
 
-4.创建app
+4.创建app,修改settings.py文件添加新的app
+    INSTALLED_APPS = [
+        ...
+        'cmdb',
+    ]
 
     app目录结构
     migrations     # django orm框架，修改表结构的操作记录（差异化）
@@ -29,9 +33,35 @@
     tests          # 单元测试
     views          # ****业务代码****
 
-5.生成数据库表
+5.生成数据库表,先修改settings.py的数据库配置信息
+
+    # Database
+    # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
+
+    # DATABASES = {
+    #     'default': {
+    #         'ENGINE': 'django.db.backends.sqlite3',
+    #         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    #     }
+    # }
+
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': 'django00',
+            'USER': 'django_admin',
+            'PASSWORD': '123456',
+            'HOST': '192.168.0.100',
+            'PORT': '3306'
+        }
+    }
+
     python manage.py makemigrations
     python manage.py migrate
+
+    tip:python3已经放弃使用MySQL-python模块,使用pymysql模块,需要在__init__.py文件中添加下面内容：
+        import pymysql
+        pymysql.install_as_MySQLdb()
 
 6.js css静态文件处理,页面里可能会包含css js文件，这些静态文件也需要引入进来,创建静态文件目录static，创建完之后还要在settings里面配置一下，最后面添加：
     STATIC_URL = '/static/'
@@ -110,3 +140,24 @@
         {% else %}
         {% endif %}
 
+10.django默认的后台管理系统
+from django.contrib import admin
+from cmdb import models
+# Register your models here.
+
+## django提供的后台管理
+admin.site.register(models.UserInfo)
+admin.site.register(models.UserType)
+admin.site.register(models.HostInfo)
+
+
+11.
+INSTALLED_APPS = [
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    'cmdb',
+]
