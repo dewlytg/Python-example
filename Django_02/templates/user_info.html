@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .item {
+            padding-top: 10px;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div style="margin: 0 auto; height: 48px;background-color: gray;color: white;">管理后台</div>
+    <div>
+        <div style="float: left;background-color: #576169;width: 150px;height: 900px;">
+            <a class="item" href="/cmdb/user_info">用户管理</a>
+            <a class="item" href="/cmdb/usergroup_info">用户组管理</a>
+        </div>
+        <div style="float: left;">
+            <form href="/cmdb/user_info" method="post">
+                <input type="text" name="username"/>
+                <input type="text" name="password"/>
+                <select name="group_id">
+                    {% for row in group_list %}
+                        <option value="{{ row.uid }}">{{ row.caption }}</option>
+                    {% endfor %}
+                </select>
+                <input type="submit" value="添加"/>
+            </form>
+            <ul>
+                {% for row in user_list %}
+                    <li>
+                        <a href="/cmdb/user_detail-{{ row.id }}.html">{{ row.username }}</a> |
+                        <span>{{ row.user_group.caption }}</span>
+                        <a href="/cmdb/user_del-{{ row.id }}.html">删除</a>
+                        <a href="/cmdb/user_edit-{{ row.id }}.html">编辑</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

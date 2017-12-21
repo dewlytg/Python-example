@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .item {
+            padding-top: 10px;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div style="margin: 0 auto; height: 48px;background-color: gray;color: white;">管理后台</div>
+    <div>
+        <div style="float: left;background-color: #576169;width: 150px;height: 900px;">
+            <a class="item" href="/cmdb/user_info">用户管理</a>
+            <a class="item" href="/cmdb/usergroup_info">用户组管理</a>
+        </div>
+        <div style="float: left;">
+            <form href="/cmdb/usergroup_edit-{{ usergroupedit.uid }}.html" method="post">
+                <input style="display: none;" type="text" name="id" value="{{ usergroupedit.uid }}"/>
+                <input type="text" name="caption" value="{{ usergroupedit.caption }}"/>
+                <input type="submit" value="确定"/>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

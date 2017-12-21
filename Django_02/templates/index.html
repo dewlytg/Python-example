@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <!--
+    <ul>
+        {% for k in userdict.keys %}
+            <li>{{ k }}</li>
+        {% endfor %}
+    </ul>
+
+    <ul>
+        {% for v in userdict.values %}
+            <li>{{ v }}</li>
+        {% endfor %}
+    </ul>
+
+    <ul>
+        {% for k,v in userdict.items %}
+            <li>{{ k }}-{{ v }}</li>
+        {% endfor %}
+    </ul>
+    -->
+{#    <form action="indexaaaaaaaaabbbbbbbccccccc" method="post">#}
+{#    <form action="{% url "index" %}" method="post">#}
+{#    <form action="{% url "index" 9 %}" method="post">#}
+{#    <form action="{{ request.path_info }}" method="post">#}
+    <form action="{% url "index" nid="1" uid="2" %}" method="post">
+        <p><input type="text" placeholder="用户名"/></p>
+        <p><input type="text" placeholder="邮箱"/></p>
+        <p><input type="submit" value="提交"/></p>
+    </form>
+    <ul>
+        {% for k,v in userdict.items %}
+            <li><a href="detail-{{ k }}.html">{{ v.name }}</a></li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

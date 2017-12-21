@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+    <style>
+        .shadow{
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            right: 0;
+            left: 0;
+            background-color: black;
+            opacity: 0.6;
+        }
+        .add_modal,.edit_modal{
+            position: fixed;
+            height: 300px;
+            width: 400px;
+            margin-top: 100px;
+            right: 50%;
+            margin-right: -200px;
+            background-color: white;
+            border: 1px solid red;
+        }
+        .hide{
+            display: none;
+        }
+    </style>
+<body>
+    <div class="shadow hide"></div>
+    <div class="add_modal hide">
+        <form id="add_form" method="post" action="/host">
+            <div>
+                <input id="host" type="text" name="hostname" placeholder="主机名"/>
+            </div>
+            <div>
+                <input id="ip" type="text" name="ip" placeholder="IP"/>
+            </div>
+            <div>
+                <input id="port" type="text" name="port" placeholder="端口"/>
+            </div>
+            <div>
+                <select id="sel" name="b_id">
+                    {% for row in caption_list %}
+                        <option value="{{ row.id }}">{{ row.caption }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <input type="submit" value="提交"/>
+            <a id="ajax_submit" style="display:inline-block; background-color: #dddddd;">悄悄提交</a>
+            <input id="cancel" type="button" value="取消"/>
+            <span id="error_msg" style="color: red;"></span>
+        </form>
+    </div>
+
+    <div class="edit_modal hide">
+        <form id="edit_form" method="post" action="/host">
+            <div>
+                <input type="text" name="nid" placeholder="id" style="display: none;"/>
+            </div>
+            <div>
+                <input type="text" name="hostname" placeholder="主机名"/>
+            </div>
+            <div>
+                <input type="text" name="ip" placeholder="IP"/>
+            </div>
+            <div>
+                <input type="text" name="port" placeholder="端口"/>
+            </div>
+            <div>
+                <select name="b_id">
+                    {% for row in caption_list %}
+                        <option value="{{ row.id }}">{{ row.caption }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <a id="ajax_submit_edit" style="display:inline-block; background-color: #dddddd;">确定编辑</a>
+        </form>
+    </div>
+
+    <input id="add_element" type="button" value="添加"/><input id="add_element" type="button" value="添加"/>
+    <h1>主机列表(对象)</h1>
+    <table border="1px;">
+        <thead>
+            <tr>
+                <th>主机名称</th>
+                <th>IP</th>
+                <th>端口</th>
+                <th>业务名称</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in v1 %}
+                <tr nid="{{ row.nid }}" gid="{{ row.b_id }}">
+                    <td>{{ row.hostname }}</td>
+                    <td>{{ row.ip }}</td>
+                    <td>{{ row.port }}</td>
+                    <td>{{ row.b.caption }}</td>
+                    <td>
+                        <a class="edit">编辑</a>|<a>删除</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <h1>主机列表(字典)</h1>
+    <table border="1px;">
+        <thead>
+            <tr>
+                <th>主机名称</th>
+                <th>端口</th>
+                <th>业务名称</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in v2 %}
+                <tr hid="{{ row.nid }}" gid="{{ row.b_id }}">
+                    <td>{{ row.hostname }}</td>
+                    <td>{{ row.port }}</td>
+                    <td>{{ row.b__caption }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <h1>主机列表(元组)</h1>
+    <table border="1px;">
+        <thead>
+            <tr>
+                <th>主机名称</th>
+                <th>端口</th>
+                <th>业务名称</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in v3 %}
+                <tr hid="{{ row.0 }}" gid="{{ row.3 }}">
+                    <td>{{ row.1 }}</td>
+                    <td>{{ row.2 }}</td>
+                    <td>{{ row.4 }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <script src="/static/jquery-1.12.4.js"></script>
+    <script>
+        $(function () {
+            $("#add_element").click(function () {
+                $(".shadow,.add_modal").removeClass("hide");
+            })
+            $("#cancel").click(function () {
+                $(".shadow,.add_modal").addClass("hide");
+            })
+            $("#ajax_submit").click(function () {
+                $.ajax({
+                    url:"/test_ajax", // 访问的url
+                    type:"POST", // 提交方式
+                    //data:{"hostname":$("#host").val(),"ip":$("#ip").val(),"port":$("#port").val(),"b_id":$("#sel").val()}, // post提交的数据
+                     data:$("#add_form").serialize(),
+                    success:function (data) {
+                        var obj = JSON.parse(data)
+                        if(obj.status){
+                            location.reload()
+                        }else {
+                            $("#error_msg").text(obj.error);
+                        }
+                    }
+                })
+            })
+
+            $(".edit").click(function () {
+                $(".shadow,.edit_modal").removeClass("hide");
+
+                var nid =  $(this).parent().parent().attr("nid");
+                var b_id = $(this).parent().parent().attr("gid");
+                console.log(b_id);
+                $("#edit_form").find("select").val(b_id);
+                $("#edit_form").find("input[name='nid']").val(nid);
+
+                $.ajax({
+                    data:$("#edit_form").serialize(),
+                })
+            })
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .item {
+            padding-top: 10px;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div style="margin: 0 auto; height: 48px;background-color: gray;color: white;">管理后台</div>
+    <div>
+        <div style="float: left;background-color: #576169;width: 150px;height: 900px;">
+            <a class="item" href="/cmdb/user_info">用户管理</a>
+            <a class="item" href="/cmdb/usergroup_info">用户组管理</a>
+        </div>
+        <div style="float: left;">
+            <form href="/cmdb/user_edit-{{ useredit.id }}.html" method="post">
+                <input style="display: none;" type="text" name="id" value="{{ useredit.id }}"/>
+                <input type="text" name="user" value="{{ useredit.username }}"/>
+                <input type="text" name="pwd" value="{{ useredit.password }}"/>
+                <input type="submit" value="确定"/>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

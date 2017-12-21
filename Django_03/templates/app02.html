@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .span_host{
+            background-color: salmon;
+            padding-left: 5px;
+        }
+        .shadow{
+            position: fixed;
+            top: 0;
+            right: 0;
+            left: 0;
+            bottom: 0;
+            background-color: black;
+            opacity: 0.6;
+            z-index: 9;
+        }
+        .add_modal,.edit_modal{
+            position: fixed;
+            border: 1px solid red;
+            width: 400px;
+            height: 300px;
+            top: 50%;
+            right: 50%;
+            margin-top: -150px;
+            margin-right: -200px;
+            background-color: white;
+            z-index: 10;
+        }
+        .hide{
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <input id="add_element" type="button" value="添加"/>
+    <h3>应用信息</h3>
+    <table border="1px;">
+        <thead>
+            <tr>
+                <th>应用组</th>
+                <th>主机信息</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in app_list %}
+                <tr aid="{{ row.id }}">
+                    <td name="appname">{{ row.name }}</td>
+                    <td >
+                        {% for row in row.r.all %}
+                            <span  class="span_host" nid="{{ row.nid }}">{{ row.hostname }}</span>
+                        {% endfor %}
+                    </td>
+                    <td>
+                        <a class="edit">编辑</a>|
+                        <a class="del">删除</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="shadow hide"></div>
+    <div class="add_modal hide">
+        <form id="add_fm" action="/app02/app" method="post">
+            <div>
+                <input name="appname" type="text" placeholder="应用组"/>
+            </div>
+            <div>
+                <select multiple="multiple" name="hlist">
+                    {% for row in host_list %}
+                        <option value="{{ row.nid }}">{{ row.hostname }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <input type="submit" value="提交"/>
+            <a id="ajax_add_element" style="background-color: #dddddd" >ajax添加</a>
+            <input id="cancel_element" type="button" value="取消"/>
+            <span id="error_msg" style="color: red;"></span>
+        </form>
+    </div>
+    <div class="edit_modal hide">
+        <form id="edit_fm" action="/app02/edit_app" method="post">
+            <div>
+                <input name="aid" type="text" placeholder="id" style="display: none"/>
+            </div>
+            <div>
+                <input name="appname" type="text" placeholder="应用组"/>
+            </div>
+            <div>
+                <select multiple="multiple" name="hlist">
+                    {% for row in host_list %}
+                        <option value="{{ row.nid }}">{{ row.hostname }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <input type="submit" value="提交"/>
+            <input id="cancel_edit_element" type="button" value="取消"/>
+        </form>
+    </div>
+    <script src="/static/jquery-1.12.4.js"></script>
+    <script>
+        $(function () {
+            $("#add_element").click(function () {
+                $(".shadow,.add_modal").removeClass("hide");
+            })
+
+            $("#cancel_element").click(function () {
+                $(".shadow,.add_modal").addClass("hide");
+            })
+
+            $(".edit").click(function () {
+                var h_list = [];
+                $(".shadow,.edit_modal").removeClass("hide");
+                var aid = $(this).parent().parent().attr("aid")
+                var appname = $(this).parent().parent().find("td[name='appname']").text();
+                $("#edit_fm").find("input[name='appname']").val(appname);
+                $("#edit_fm").find("input[name='aid']").val(aid);
+                var spans = $(this).parent().prev().children();
+                for(var i=0;i<spans.length;i++){
+                    h_list.push(spans[i].getAttribute("nid"));
+                }
+                $("#edit_fm").find("select[name='hlist']").val(h_list);
+            })
+
+            $("#cancel_edit_element").click(function () {
+                $(".shadow,.edit_modal").addClass("hide");
+            })
+
+            $("#ajax_add_element").click(function () {
+                $.ajax({
+                    url:"/app02/add_ajax_app",
+                    type:"POST",
+                    dataType:"JSON",
+                    traditional:"true",
+                    data:$("#add_fm").serialize(),
+                    success:function (data) {
+                        if(data.status){
+                            location.reload();
+                        }else {
+                            $("#error_msg").text(data.error);
+                        }
+                }
+            })
+            })
+
+            $(".del").click(function () {
+                var aid = $(this).parent().parent().attr("aid");
+                $.ajax({
+                    url:"/app02/del_app",
+                    type:"POST",
+                    data:{"aid":aid},
+                    success:function (data) {
+                        location.reload();
+                    }
+                })
+            })
+        })
+    </script>
+
+</body>
+</html>

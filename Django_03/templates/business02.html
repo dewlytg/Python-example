@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h3>业务组信息</h3>
+    <ul>
+        {% for row in v1 %}
+            <li>{{ row.id }}-{{ row.capition }}-{{ row.code }}</li>
+        {% endfor %}
+    </ul>
+    <h3>业务组信息</h3>
+    <ul>
+        {% for row in v2 %}
+            <li>{{ row.id }}-{{ row.capition }}</li>
+        {% endfor %}
+    </ul>
+    <h3>业务组信息</h3>
+    <ul>
+        {% for row in v3 %}
+            <li>{{ row.0 }}-{{ row.1 }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .host{
+            background-color: salmon;
+            padding-right: 5px;
+        }
+        .shadow{
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            right: 0;
+            left: 0;
+            background-color: black;
+            opacity: 0.6;
+        }
+        .add_modal{
+            position: fixed;
+            height: 300px;
+            width: 400px;
+            margin-top: 100px;
+            right: 50%;
+            margin-right: -200px;
+            background-color: white;
+            border: 1px solid red;
+        }
+        .hide{
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <input id="add_element" type="button" value="添加"/>
+    <h1>应用信息</h1>
+    <table border="1px">
+        <thead>
+            <tr>
+                <th>应用组</th>
+                <th>应用组主机</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in app_list %}
+                <tr>
+                    <td>{{ row.name }}</td>
+                    <td>
+                        {% for host in row.r.all %}
+                            <span class="host">{{ host.hostname }}</span>
+                        {% endfor %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="shadow hide"></div>
+    <div class="add_modal hide">
+        <form id="add_form" method="post" action="/app">
+            <div>
+                <input id="app" type="text" name="app" placeholder="应用名称"/>
+            </div>
+
+            <div>
+                <select id="host_list" name="host_list" multiple="multiple">
+                    {% for row in host_list %}
+                        <option value="{{ row.nid }}">{{ row.hostname }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <input type="submit" value="提交"/>
+            <input id="add_submit_ajax" type="button" value="ajax提交"/>
+        </form>
+    </div>
+
+    <script src="/static/jquery-1.12.4.js"></script>
+    <script>
+        $(function () {
+            $("#add_element").click(function () {
+                $(".shadow,.add_modal").removeClass("hide");
+            })
+            $("#cancel").click(function () {
+                $(".shadow,.add_modal").addClass("hide");
+            })
+
+            $("#add_submit_ajax").click(function () {
+                $.ajax({
+                        url:"/add_adjax",
+                        type:"POST",
+                        dataType :"JSON", //不用使用JSON.parse方法转换了
+                        traditional: true, //解决下面data中传送数据时候不是字符串的问题,host_list是列表,如果不转换后端获取不到数据
+                        data:$("#add_form").serialize(), //直接发送form表单中提交的所有数据,name="app" name="host_list"
+                        success:function (obj) {
+                            location.reload();
+                            console.log(obj);
+                        },
+                        error:function (obj) {
+
+                        }
+                    }
+                )
+            })
+        })
+    </script>
+</body>
+</html>

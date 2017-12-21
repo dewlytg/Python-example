@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .pg-header{
+            height: 48px;
+            position: fixed;
+            top: 0;
+            right: 0;
+            left: 0;
+            background-color: #dddddd;
+        }
+        .pg-content{
+            margin-top: 48px;
+            width: 1200px;
+        }
+        .pg-left{
+            width: 200px;
+            background-color: #eeeeee;
+            border-radius: 1px;
+        }
+        .pg-right{
+            width: 1000px;
+            height: 650px;
+            text-align: center;
+        }
+        .left{
+            float: left;
+        }
+        .item{
+            height: 100px;
+            color: green;
+            text-align: center;
+            line-height: 100px;
+        }
+        .modal{
+            position: fixed;
+            top:50%;
+            left:50%;
+            width:800px;
+            height:400px;
+            margin-left:-400px;
+            margin-top: -250px;
+            background-color: #eeeeee;
+            z-index: 10;
+        }
+        .modal .edition{
+            display: block;
+        }
+        .shadow{
+            position: fixed;
+            top:0;
+            left:0;
+            right:0;
+            bottom:0;
+            opacity: 0.6;
+            background-color: black;
+            z-index: 9;
+        }
+        .tb td{
+            height: 30px;
+            width: 160px;
+        }
+        .hide{
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="pg-header">
+
+    </div>
+    <div class="pg-content">
+        <div class="pg-left left">
+            <div class="item">主机信息</div>
+            <div class="item">人员信息</div>
+            <div class="item">权限管理</div>
+        </div>
+        <div class="pg-right left">
+            <table class="tb" border="1px">
+                <tr>
+                    <td>id</td>
+                    <td>主机名称</td>
+                    <td>IP</td>
+                    <td>机房</td>
+                    <td>系统</td>
+                </tr>
+                {% for row in hostlist %}
+                    <tr tid="{{ row.id }}">
+                        <td target="id">{{ row.id }}</td>
+                        <td target="hostname">{{ row.hostname }}</td>
+                        <td target="position">{{ row.position }}</td>
+                        <td target="osname">{{ row.osname }}</td>
+                        <td><a nid="{{ row.id }}" class="edit" href="#">编辑</a>|<a href="/hostinfo?did={{ row.id }} ">删除</a></td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+    <div class="shadow hide"></div>
+    <div class="modal hide">
+        <form action="/hostinfo" method="post">
+            <label for="hostname">主机名：</label>
+            <input class="edition" name="id" type="text"/>
+
+            <label for="ip">IP：</label>
+            <input class="edition" name="hostname" type="text"/>
+
+            <label for="position">机房：</label>
+            <input class="edition" name="position" type="text"/>
+
+            <label for="os">系统：</label>
+            <input class="edition" name="osname" type="text"/>
+
+            <input  type="submit" value="确定">
+            <input type="button" value="取消">
+        </form>
+
+    </div>
+
+    <script src="/static/jquery-1.12.4.js"></script>
+    <script>
+        $(".edit").click(function () {
+            var tds = $(this).parent().siblings()
+
+            tds.each(function () {
+                var tdname = $(this).attr("target");
+                var tdval = $(this).text();
+                $(":text[name='" + tdname + "']").val(tdval);
+            })
+
+            $(".shadow,.modal").removeClass("hide");
+
+        })
+
+        $(":button").click(function () {
+            $(".shadow,.modal").addClass("hide");
+        })
+
+    </script>
+</body>
+</html>
