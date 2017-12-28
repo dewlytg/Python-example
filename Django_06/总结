@@ -1,0 +1,598 @@
+1. Session,基于Cookie做用户验证时：敏感信息不适合放在cookie中
+    a.Session原理
+      Cookie是保存在用户浏览器端的键值对
+      Session是保存在服务器端的键值对:
+            保存在数据库
+            使用session 前需要执行
+                --Python manage.py makemigrations
+                --python manage.py migrate
+            保存在内存中的形式:
+            '随机字符串':{
+            'username': '....',
+            'is_login': '....',
+            ....
+            }
+
+    b. Cookie和Session对比
+    c. Session配置(缺少cache)
+    d. 示例：实现两周自动登陆
+            - request.session.set_expiry(60*10)
+            - SESSION_SAVE_EVERY_REQUEST = True
+
+        PS: cookie中不设置超时时间，则表示关闭浏览器自动清除
+        - session依赖于cookie
+            request.session.get()#获取
+            request.session[x] = x
+            request.session.clear()
+
+2.
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
+        'LOCATION': os.path.join(BASE_DIR,'cache')
+        }
+}
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'   # 引擎（默认）#保存在数据库中
+SESSION_ENGINE = 'django.contrib.sessions.backends.cache'  #在缓存中
+SESSION_ENGINE = 'django.contrib.sessions.backends.file'  #在文件中
+SESSION_ENGINE = 'django.contrib.sessions.backends.cached_db' #缓存加数据库
+SESSION_ENGINE = 'django.contrib.sessions.backends.signed_cookies' #加密cookies
+
+
+ 配置文件中设置默认操作（通用配置）：
+SESSION_COOKIE_NAME ＝ "sessionid"                       # Session的cookie保存在浏览器上时的key，即：sessionid＝随机字符串（默认）
+SESSION_COOKIE_PATH ＝ "/"                               # Session的cookie保存的路径（默认）
+SESSION_COOKIE_DOMAIN = None                             # Session的cookie保存的域名（默认）
+SESSION_COOKIE_SECURE = False                            # 是否Https传输cookie（默认）
+SESSION_COOKIE_HTTPONLY = True                           # 是否Session的cookie只支持http传输（默认）
+SESSION_COOKIE_AGE = 1209600                             # Session的cookie失效日期（2周）（默认）
+SESSION_EXPIRE_AT_BROWSER_CLOSE = False                  # 是否关闭浏览器使得Session过期（默认）
+# set_cookie('k',123)
+SESSION_SAVE_EVERY_REQUEST = False                       # 是否每次请求都保存Session，默认修改之后才保存（默认）
+
+
+#设置超时时间 :
+request.session.set_expiry(value)
+* 如果valus为整数 ,session会在秒数后失效
+* 如果valus为datatime或timedelta ,session会在这个时间后失效
+* 如果valus为0 ,session会在关闭浏览器后失效
+* 如果valus为0 ,session会在关闭浏览器后失效
+
+request.session.keys() #键
+request.session.values() #值
+request.session.items() #键值对
+request.session.iterkeys() #
+request.session.itervalues() #
+request.session.iteritems() #
+#用户session的随机的字符串
+request.session.session_key
+#将所有Session失效日期小于当日期的数据删除
+request.session.clear_expired()
+#检查 用户session的随机字符串 在数据库中是否存在
+requset.session.exists('session_key')#request.session.get('key',None)#包含了
+#删除 用户session的随机字符串 及对应的 键值
+requset.session.delete('session_key')
+request.session.clear()#注销使用
+
+
+3.####################################   CSRF   #########################################
+CSRF:
+    a. CSRF原理
+        {% csrf_token %}#前端生成一个随机字符串
+            --在表单中 和COOKIS 中都有存在 但不一样
+
+        django为用户实现防止跨站请求伪造的功能，
+        通过中间件 django.middleware.csrf.CsrfViewMiddleware 来完成。
+        而对于django中设置防跨站请求伪造功能有分为全局和局部。
+            全局
+                 --在全局发送POST数据时，需要 csrf_token
+            局部
+                --@csrf_protect，为当前函数强制设置防跨站请求伪造功能，即便settings中没有设置全局中间件。
+                --@csrf_exempt，取消当前函数防跨站请求伪造功能，即便settings中设置了全局中间件。
+            注：from django.views.decorators.csrf import csrf_exempt,csrf_protect
+
+    b. 无CSRF时存在隐患
+    c. Form提交  (CSRF)
+        <form>
+            {%csrf_token%}
+        </form>
+    d. Ajax提交 (CSRF)
+        CSRF请求头 X-CSRFToken （不能有下划线）
+        示例：
+        $(function(){
+          //
+            $.ajaxSetup({//当前所有ajax发送 全局
+                beforeSend: function(xhr,settings){//发送ajax前 先执行这个函数
+                    xhr.setRequestHeader('X-CSRFtoken', $.cookie('csrftoken'));
+                }
+            });
+
+            $('#btn1').click(function () {
+                $.ajax({
+                    url: '/login/',
+                    type:"GET",
+                    data: {'user': 'root', 'pwd': '123'},
+                    // headers: {'X-CSRFtoken': $.cookie('csrftoken')}, 局部生效
+                    success:function(arg){
+
+                    }
+                })
+            });
+        })
+
+4.中间件settings.py
+--  MIDDLEWARD=[
+                '......',
+                '.....  ....',
+                '.....   ..... .....',
+
+            ]
+    class Row1(MiddlewareMixin):
+        def process_request(self,request):
+            print('发送通过一')
+
+        def process_view(self, request, view_func, view_func_args, view_func_kwargs):
+            print('处理1')
+
+        def process_response(self, request, response):
+            print('返回2')
+            return response
+
+    from django.shortcuts import HttpResponse
+    class Row2(MiddlewareMixin):
+        def process_request(self,request):
+            print('发送通过二')
+            # return HttpResponse('走')
+
+        def process_view(self, request, view_func, view_func_args, view_func_kwargs):
+            print('处理2')
+
+        def process_response(self, request, response):
+            print('返回1')
+            return response
+
+5.######################################缓存##############################################
+    Django中提供了6种缓存方式：
+
+        开发调试
+        内存
+        文件
+        数据库
+        Memcache缓存（python-memcached模块）
+        Memcache缓存（pylibmc模块）
+
+
+        a、开发调试
+            # 此为开始调试用，实际内部不做任何操作
+            # 配置：
+            CACHES = {
+                    'default': {
+                        'BACKEND': 'django.core.cache.backends.dummy.DummyCache',     # 引擎
+                        'TIMEOUT': 300,                                               # 缓存超时时间（默认300，None表示永不过期，0表示立即过期）
+                        'OPTIONS':{
+                            'MAX_ENTRIES': 300,                                       # 最大缓存个数（默认300）
+                            'CULL_FREQUENCY': 3,                                      # 缓存到达最大个数之后，剔除缓存个数的比例，即：1/CULL_FREQUENCY（默认3）
+                        },
+                        'KEY_PREFIX': '',                                             # 缓存key的前缀（默认空）
+                        'VERSION': 1,                                                 # 缓存key的版本（默认1）
+                        'KEY_FUNCTION' 函数名                                         # 生成key的函数（默认函数会生成为：【前缀:版本:key】）
+                    }
+                }
+
+          b、内存
+            # 此缓存将内容保存至内存的变量中
+            # 配置：
+            CACHES = {
+                    'default': {
+                        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+                        'LOCATION': 'unique-snowflake',
+                    }
+                }
+            # 注：其他配置同开发调试版本
+
+          c、文件
+            # 此缓存将内容保存至文件
+            # 配置：
+            CACHES = {
+                    'default': {
+                        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
+                        'LOCATION': '/var/tmp/django_cache',
+                    }
+                }
+            # 注：其他配置同开发调试版本
+
+           d、数据库
+            # 此缓存将内容保存至数据库
+            # 配置：
+             CACHES = {
+                    'default': {
+                        'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
+                        'LOCATION': 'my_cache_table', # 数据库表
+                    }
+                }
+
+            # 注：执行创建表命令 python manage.py createcachetabl
+
+            e、Memcache缓存（python-memcached模块）
+            # 此缓存使用python-memcached模块连接memcache
+            CACHES = {
+                'default': {
+                    'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+                    'LOCATION': '127.0.0.1:11211',
+                }
+            }
+
+            CACHES = {
+                'default': {
+                    'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+                    'LOCATION': 'unix:/tmp/memcached.sock',
+                }
+            }
+
+            CACHES = {
+                'default': {
+                    'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+                    'LOCATION': [
+                        '172.19.26.240:11211',
+                        '172.19.26.242:11211',
+                    ]
+                }
+            }
+
+            f、Memcache缓存（pylibmc模块）
+           # 此缓存使用pylibmc模块连接memcache
+           CACHES = {
+                'default': {
+                    'BACKEND': 'django.core.cache.backends.memcached.PyLibMCCache',
+                    'LOCATION': '127.0.0.1:11211',
+                }
+            }
+
+            CACHES = {
+                'default': {
+                    'BACKEND': 'django.core.cache.backends.memcached.PyLibMCCache',
+                    'LOCATION': '/tmp/memcached.sock',
+                }
+            }
+
+            CACHES = {
+                'default': {
+                    'BACKEND': 'django.core.cache.backends.memcached.PyLibMCCache',
+                    'LOCATION': [
+                        '172.19.26.240:11211',
+                        '172.19.26.242:11211',
+                    ]
+                }
+            }
+
+            3种应用：
+            全局:全站使用
+            使用中间件，经过一系列的认证等操作，如果内容在缓存中存在，则使用FetchFromCacheMiddleware获取内容并返回给用户，
+            当返回给用户之前，判断缓存中是否已经存在，如果不存在则UpdateCacheMiddleware会将缓存保存至缓存，从而实现全站缓存
+            MIDDLEWARE = [
+                'django.middleware.cache.UpdateCacheMiddleware',#写入缓存
+                # 其他中间件...
+                'django.middleware.cache.FetchFromCacheMiddleware',#提示使用缓存
+            ]
+
+            CACHE_MIDDLEWARE_ALIAS = ""
+            CACHE_MIDDLEWARE_SECONDS = ""
+            CACHE_MIDDLEWARE_KEY_PREFIX = ""
+
+            视图函数:单独视图缓存
+            方式一：
+                from django.views.decorators.cache import cache_page
+                @cache_page(60 * 15)
+                def my_view(request):
+            方式二：
+                from django.views.decorators.cache import cache_page
+                urlpatterns = [
+                      url(r'^foo/([0-9]{1,2})/$', cache_page(60 * 15)(views.my_view)),
+                ]
+
+            模板:局部视图使用
+            a. 引入TemplateTag
+                {% load cache %}
+            b. 使用缓存
+                {% cache 5000 缓存key %}
+                    缓存内容
+                {% endcache %}
+
+6.############################################信号################################################
+
+Django内置信号
+Model signals
+        pre_init                    # django的modal执行其构造方法前，自动触发
+        post_init                   # django的modal执行其构造方法后，自动触发
+        pre_save                    # django的modal对象保存前，自动触发
+        post_save                   # django的modal对象保存后，自动触发
+        pre_delete                  # django的modal对象删除前，自动触发
+        post_delete                 # django的modal对象删除后，自动触发
+        m2m_changed                 # django的modal中使用m2m字段操作第三张表（add,remove,clear）前后，自动触发
+        class_prepared              # 程序启动时，检测已注册的app中modal类，对于每一个类，自动触发
+    Management signals
+        pre_migrate                 # 执行migrate命令前，自动触发
+        post_migrate                # 执行migrate命令后，自动触发
+    Request/response signals
+        request_started             # 请求到来前，自动触发
+        request_finished            # 请求结束后，自动触发
+        got_request_exception       # 请求异常后，自动触发
+    Test signals
+        setting_changed             # 使用test测试修改配置文件时，自动触发
+        template_rendered           # 使用test测试渲染模板时，自动触发
+    Database Wrappers
+        connection_created          # 创建数据库连接时，自动触发
+
+对于Django内置的信号，仅需注册指定信号，当程序执行相应操作时，自动触发注册函数：
+from django.core.signals import request_finished
+    from django.core.signals import request_started
+    from django.core.signals import got_request_exception
+
+    from django.db.models.signals import class_prepared
+    from django.db.models.signals import pre_init, post_init
+    from django.db.models.signals import pre_save, post_save
+    from django.db.models.signals import pre_delete, post_delete
+    from django.db.models.signals import m2m_changed
+    from django.db.models.signals import pre_migrate, post_migrate
+
+    from django.test.signals import setting_changed
+    from django.test.signals import template_rendered
+
+    from django.db.backends.signals import connection_created
+
+    #要注册的函数
+    def callback(sender, **kwargs):
+        print("xxoo_callback")
+        print(sender,kwargs)
+
+    xxoo.connect(callback)#注册到信号
+    # xxoo指上述导入的内容
+
+
+    from django.core.signals import request_finished
+    from django.dispatch import receiver
+
+    @receiver(request_finished)
+    def my_callback(sender, **kwargs):
+        print("Request finished!")
+
+
+    自定义信号
+    a. 定义信号
+    import django.dispatch
+    pizza_done = django.dispatch.Signal(providing_args=["toppings", "size"])
+
+    b. 注册信号
+        def callback(sender, **kwargs):
+            print("callback")
+            print(sender,kwargs)
+
+        pizza_done.connect(callback)
+
+    c. 触发信号
+        from 路径 import pizza_done
+        pizza_done.send(sender='seven',toppings=123, size=456)
+
+
+7.##################################form表单###############################################
+Form操作
+   完成：
+      - 验证用户请求
+
+      - 生成HTML
+        （保留上一次提交的数据）
+Form类
+    创建Form类时，主要涉及到 【字段】 和 【插件】，字段用于对用户请求数据的验证，插件用于自动生成HTML
+    1、Django内置字段
+Field
+        required=True,               是否允许为空
+        widget=None,                 HTML插件
+        label=None,                  用于生成Label标签或显示内容
+        initial=None,                初始值
+        help_text='',                帮助信息(在标签旁边显示)
+        error_messages=None,         错误信息 {'required': '不能为空', 'invalid': '格式错误'}
+        show_hidden_initial=False,   是否在当前插件后面再加一个隐藏的且具有默认值的插件（可用于检验两次输入是否一直）
+        validators=[],               自定义验证规则
+        localize=False,              是否支持本地化
+        disabled=False,              是否可以编辑
+        label_suffix=None            Label内容后缀
+
+    CharField(Field)
+        max_length=None,             最大长度
+        min_length=None,             最小长度
+        strip=True                   是否移除用户输入空白
+
+    IntegerField(Field)             对数字进行验证
+        max_value=None,              最大值
+        min_value=None,              最小值
+
+    FloatField(IntegerField)         对浮点数字进行验证
+        ...
+
+    DecimalField(IntegerField)
+        max_value=None,              最大值
+        min_value=None,              最小值
+        max_digits=None,             总长度
+        decimal_places=None,         小数位长度
+
+    BaseTemporalField(Field)
+        input_formats=None          时间格式化
+
+    DateField(BaseTemporalField)    格式：2015-09-01
+    TimeField(BaseTemporalField)    格式：11:12
+    DateTimeField(BaseTemporalField)格式：2015-09-01 11:12
+
+    DurationField(Field)            时间间隔：%d %H:%M:%S.%f
+        ...
+
+    RegexField(CharField)
+        regex,                      自定制正则表达式
+        max_length=None,            最大长度
+        min_length=None,            最小长度
+        error_message=None,         忽略，错误信息使用 error_messages={'invalid': '...'}
+
+    EmailField(CharField)
+        ...
+
+    FileField(Field)
+        allow_empty_file=False     是否允许空文件
+
+    ImageField(FileField)            图片
+        ...
+        注：需要PIL模块，pip3 install Pillow
+        以上两个字典使用时，需要注意两点：
+            - form表单中 enctype="multipart/form-data"
+            - view函数中 obj = MyForm(request.POST, request.FILES)
+
+    URLField(Field)
+        ...
+
+
+    BooleanField(Field)
+        ...
+
+    NullBooleanField(BooleanField)
+        ...
+
+    ChoiceField(Field)          #下拉框 select option
+        ...
+        choices=(),                选项，如：choices = ((0,'上海'),(1,'北京'),)
+        required=True,             是否必填
+        widget=None,               插件，默认select插件
+        label=None,                Label内容
+        initial=None,              初始值
+        help_text='',              帮助提示
+
+
+    ModelChoiceField(ChoiceField)  #下拉框多选  select  multiple='multiple    option
+        ...                        django.forms.models.ModelChoiceField
+        queryset,                  # 查询数据库中的数据
+        empty_label="---------",   # 默认空显示内容
+        to_field_name=None,        # HTML中value的值对应的字段
+        limit_choices_to=None      # ModelForm中对queryset二次筛选
+
+    ModelMultipleChoiceField(ModelChoiceField)
+        ...                        django.forms.models.ModelMultipleChoiceField
+
+
+
+    TypedChoiceField(ChoiceField)
+        coerce = lambda val: val   对选中的值进行一次转换
+        empty_value= ''            空值的默认值
+
+    MultipleChoiceField(ChoiceField)
+        ...
+
+    TypedMultipleChoiceField(MultipleChoiceField)
+        coerce = lambda val: val   对选中的每一个值进行一次转换
+        empty_value= ''            空值的默认值
+
+    ComboField(Field)
+        fields=()                  使用多个验证，如下：即验证最大长度20，又验证邮箱格式
+                                   fields.ComboField(fields=[fields.CharField(max_length=20), fields.EmailField(),])
+
+    MultiValueField(Field)
+        PS: 抽象类，子类中可以实现聚合多个字典去匹配一个值，要配合MultiWidget使用
+
+    SplitDateTimeField(MultiValueField)
+        input_date_formats=None,   格式列表：['%Y--%m--%d', '%m%d/%Y', '%m/%d/%y']
+        input_time_formats=None    格式列表：['%H:%M:%S', '%H:%M:%S.%f', '%H:%M']
+
+    FilePathField(ChoiceField)     文件选项，目录下文件显示在页面中
+        path,                      文件夹路径
+        match=None,                正则匹配
+        recursive=False,           递归下面的文件夹
+        allow_files=True,          允许文件
+        allow_folders=False,       允许文件夹
+        required=True,              是否必填
+        widget=None,                插件，默认select插件
+        label=None,                标签
+        initial=None,              默认值
+        help_text=''
+
+    GenericIPAddressField
+        protocol='both',           both,ipv4,ipv6支持的IP格式
+        unpack_ipv4=False          解析ipv4地址，如果是::ffff:192.0.2.1时候，可解析为192.0.2.1， PS：protocol必须为both才能启用
+
+    SlugField(CharField)           数字，字母，下划线，减号（连字符）
+        ...
+
+    UUIDField(CharField)           uuid类型
+        ...
+
+    Django 内置组件
+    TextInput(Input)
+    NumberInput(TextInput)
+    EmailInput(TextInput)
+    URLInput(TextInput)
+    PasswordInput(TextInput)
+    HiddenInput(TextInput)
+    Textarea(Widget)
+    DateInput(DateTimeBaseInput)
+    DateTimeInput(DateTimeBaseInput)
+    TimeInput(DateTimeBaseInput)
+    CheckboxInput
+    Select
+    NullBooleanSelect
+    SelectMultiple
+    RadioSelect
+    CheckboxSelectMultiple
+    FileInput
+    ClearableFileInput
+    MultipleHiddenInput
+    SplitDateTimeWidget
+    SplitHiddenDateTimeWidget
+    SelectDateWidget
+
+    常用选择插件
+    # 单radio，值为字符串
+        # user = fields.CharField(
+        #     initial=2,
+        #     widget=widgets.RadioSelect(choices=((1,'上海'),(2,'北京'),))
+        # )
+
+        # 单radio，值为字符串
+        # user = fields.ChoiceField(
+        #     choices=((1, '上海'), (2, '北京'),),
+        #     initial=2,
+        #     widget=widgets.RadioSelect
+        # )
+
+        # 单select，值为字符串
+        # user = fields.CharField(
+        #     initial=2,
+        #     widget=widgets.Select(choices=((1,'上海'),(2,'北京'),))
+        # )
+
+        # 单select，值为字符串
+        # user = fields.ChoiceField(
+        #     choices=((1, '上海'), (2, '北京'),),
+        #     initial=2,
+        #     widget=widgets.Select
+        # )
+
+        # 多选select，值为列表
+        # user = fields.MultipleChoiceField(
+        #     choices=((1,'上海'),(2,'北京'),),
+        #     initial=[1,],
+        #     widget=widgets.SelectMultiple
+        # )
+
+
+        # 单checkbox
+        # user = fields.CharField(
+        #     widget=widgets.CheckboxInput()
+        # )
+
+
+        # 多选checkbox,值为列表
+        # user = fields.MultipleChoiceField(
+        #     initial=[2, ],
+        #     choices=((1, '上海'), (2, '北京'),),
+        #     widget=widgets.CheckboxSelectMultiple
+        # )
+
+
+
+
+

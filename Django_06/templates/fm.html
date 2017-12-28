@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{#    <form action="/fm" method="post">#}
+{#        {% csrf_token %}#}
+{#        <input type="text" name="user"/>#}
+{#        <input type="text" name="pwd"/>#}
+{#        <input type="text" name="email"/>#}
+{#        <input type="submit" value="提交"/>#}
+{#    </form>#}
+
+    <form action="/fm" method="post">
+        {% csrf_token %}
+        <p>{{ obj.user.label }} {{ obj.user }} {{ obj.errors.user.0 }}</p>
+        <p>{{ obj.pwd }} {{ obj.errors.pwd.0 }}</p>
+        <p>{{ obj.email }} {{ obj.errors.email.0 }}</p>
+        <p>{{ obj.f }} {{ obj.errors.f.0 }}</p>
+        <p>{{ obj.p }} {{ obj.errors.p.0 }}</p>
+        {{ obj.city1 }}
+        {{ obj.city2 }}
+{#        <p>{{ obj.as_p }}</p>#}
+{#        <p>{{ obj.as_ul }}</p>#}
+{#        <table>#}
+{#            {{ obj.as_table }}#}
+{#        </table>#}
+        <input type="submit" value="提交"/>
+    </form>
+</body>
+</html>

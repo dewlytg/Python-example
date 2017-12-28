@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="/static/body.css"/>
+    <style>
+        .pg-header{
+            height:48px;
+            background-color: seagreen;
+            color: green;
+        }
+    </style>
+    {% block css %}{% endblock %}
+</head>
+<body>
+    <div class="pg-header">后台管理</div>
+
+    {% block content %}{% endblock %}
+
+    <script src="/static/jQuery.js"></script>
+    {% block js %}{% endblock %}
+</body>
+</html>

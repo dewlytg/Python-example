@@ -1,0 +1,172 @@
+{% extends "master.html" %}
+{% block css %}
+    <style>
+        .pagination{
+            padding-right: 5px;
+            background-color: #eeeeee;
+            color: green;
+        }
+        .shadow{
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            right: 0;
+            left: 0;
+            background-color: black;
+            opacity: 0.6;
+            z-index: 9;
+        }
+        .add-modal, .edit-modal,.del-modal{
+            position: fixed;
+            height: 300px;
+            width: 400px;
+            top: 50%;
+            right: 50%;
+            margin-right: -200px;
+            margin-top: -150px;
+            background-color: white;
+            border: 1px solid #eeeeee;
+            text-align: left;
+            z-index: 10;
+        }
+        .add_button{
+            text-align: left;
+        }
+        .hide{
+            display: none;
+        }
+        .err{
+            color:red;
+        }
+        .suc{
+            color: green;
+        }
+        .host-span{
+            background-color: #dddddd;
+            color: black;
+        }
+    </style>
+{% endblock %}
+
+{% block username %}
+    {{ username }}
+{% endblock %}
+
+{% block body-content %}
+    <div class="add_button">
+        <input id="add_element" type="button" value="添加"/>
+        <span style="color: #2b542c" id="del_msg"></span>
+    </div>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>应用组</th>
+                <th>主机列表</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in applist %}
+                <tr appid="{{ row.id }}">
+                    <td name="appname">{{ row.name }}</td>
+                    <td>
+                        {% for i in row.h.all %}
+                            <span name="hostlist" h_id="{{ i.id }}" class="host-span">{{ i.hostname }}</span>
+                        {% endfor %}
+                    </td>
+                    <td>
+                        <a class="edit_element">编辑</a>|
+                        <a class="del_element">删除</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="shadow hide"></div>
+    <div class="add-modal hide">
+        <form id="add_fm" action="/addapp" method="post">
+            <div>
+                <input style="display: inline-block;" type="text" name="appname" placeholder="应用名称"/>
+            </div>
+            <div>
+                <select  style="display: inline-block;" name="host_list" multiple="multiple">
+                    {% for row in hostlist %}
+                        <option value="{{ row.id }}">{{ row.hostname }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <input type="submit" value="确定"/>
+            <a id="ajax_add_element" style="background-color: #eeeeee">ajax添加</a>
+            <input id="add_cancel_element" type="button" value="取消"/>
+            <span id="err_msg"></span>
+        </form>
+    </div>
+    <div class="edit-modal hide">
+    <form id="edit_fm" action="/editapp" method="post">
+        <div>
+            <input style="display: none;" type="text" name="appid"/>
+        </div>
+        <div>
+            <input type="text" name="appname"/>
+        </div>
+        <div>
+            <select  id="h_sel" style="display: inline-block;" name="host_list" multiple="multiple">
+                {% for row in hostlist %}
+                    <option value="{{ row.id }}">{{ row.hostname }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <input type="submit" value="确定"/>
+        <input id="edit_cancel_element" type="button" value="取消"/>
+    </form>
+</div>
+{% endblock %}
+
+{% block jscontent %}
+    <script src="/static/bootstrap-3.3.7-dist/js/jquery-1.12.4.js"></script>
+    <script src="/static/bootstrap-3.3.7-dist/js/jquery.cookie.js"></script>
+    <script>
+        $("#add_element").click(function () {
+            $(".shadow,.add-modal").removeClass("hide");
+        })
+        $("#add_cancel_element").click(function () {
+            $(".shadow,.add-modal").addClass("hide");
+        })
+        $(".edit_element").click(function () {
+            $(".shadow,.edit-modal").removeClass("hide");
+            var appid =  $(this).parent().parent().attr("appid");
+            var appname =  $(this).parent().parent().find("td[name='appname']").text();
+            var hostlist =  $(this).parent().parent().find("span[name='hostlist']").get();
+            var hid_list = [];
+            for (var j=0;j<hostlist.length;j++) {
+                  var h_id = hostlist[j].getAttribute("h_id");
+                  hid_list.push(h_id);
+            }
+            $("#edit_fm").find("input[name='appid']").val(appid);
+            $("#edit_fm").find("input[name='appname']").val(appname);
+            $("#edit_fm").find("select[name='host_list']").val(hid_list);
+{#            $("#edit_fm").find("input[name='ip']").val(ip);#}
+{#            $("#edit_fm").find("input[name='port']").val(port);#}
+{#            $("#edit_fm").find("input[name='h_id']").val(h_id);#}
+{#            $("#edit_fm").find("select").val(g_id);#}
+
+        })
+        $("#edit_cancel_element").click(function () {
+            $(".shadow,.edit-modal").addClass("hide");
+        })
+        $(".del_element").click(function () {
+            var appid =  $(this).parent().parent().attr("appid");
+            console.log(appid);
+            $.ajax({
+                url:"/delapp",
+                type:"POST",
+                data:{"appid":appid},
+                success:function (data) {
+                    $("#del_msg").text(data);
+                    location.reload();
+                }
+            })
+        })
+    </script>
+{% endblock %}

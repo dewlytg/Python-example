@@ -1,0 +1,19 @@
+{% load cache %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div>{{ ctime }}</div>
+    <div>{{ ctime }}</div>
+
+    <div>
+        {# 某个元素缓存 #}
+        {% cache 3 c1 %}
+            {{ ctime }}
+        {% endcache %}
+    </div>
+</body>
+</html>

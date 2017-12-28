@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="/static/bootstrap-3.3.7-dist/css/bootstrap.min.css" >
+
+    <!-- 可选的 Bootstrap 主题文件（一般不用引入） -->
+    <link rel="stylesheet" href="/static/bootstrap-3.3.7-dist/css/bootstrap-theme.min.css" >
+
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+
+{#    <script src="/static/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>#}
+
+    <style>
+        .pg-header{
+            height: 48px;
+            background-color: #1b6d85;
+            line-height: 48px;
+            border-radius: 3px;
+            margin-top: -8px;
+            margin-right: -8px;
+            margin-left: -8px;
+        }
+        .pg-header .h-right{
+            color: #dddddd;
+            margin-right: 10px;
+        }
+        .pg-body{
+            clear:both;
+            text-align: center;
+        }
+        .pg-body .b-left{
+            background-color: #d6e1e9;
+            margin-bottom: 30px;
+            margin-left: -8px;
+            width: 180px;
+            height: 900px;
+            border-radius: 3px;
+        }
+        .pg-body .b-left .item{
+            margin-bottom: 10px;
+            color: #000000;
+            font-size: large;
+        }
+        .pg-body .b-right{
+            margin-left: 20px;
+            margin-top: 20px;
+        }
+        .pg-footer{
+            position: fixed;
+            bottom: 0;
+            right: 0;
+            left: 0;
+            height: 30px;
+            background-color: #204d74;
+            color: #dddddd;
+            text-align: center;
+            line-height: 30px;
+        }
+        .left{
+            float: left;
+        }
+        .right{
+            float: right;
+        }
+    </style>
+    {% block css %}
+    {% endblock %}
+</head>
+<body>
+    {% block modal %}
+    {% endblock %}
+
+    <div class="pg-header">
+        <div class="h-left"></div>
+        <div class="h-right right">
+            <span>
+                {% block username %}
+                {% endblock %}
+            </span>
+        </div>
+    </div>
+
+    <div class="pg-body">
+        <div class="b-left left">
+            <div class="item">
+                <a>用户管理</a>
+            </div>
+            <div class="item">
+                <a href="/hostlist">主机管理</a>
+            </div>
+            <div class="item">
+                <a href="/order">订单管理</a>
+            </div>
+            <div class="item">
+                <a href="/application">应用管理</a>
+            </div>
+            <div class="item">
+                <a>权限管理</a>
+            </div>
+        </div>
+        <div class="b-right left">
+            {% block body-content %}
+            {% endblock %}
+        </div>
+    </div>
+
+    <div class="pg-footer">版权所有@</div>
+
+    {% block jscontent %}
+    {% endblock %}
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .pagination .page{
+            display:  inline-block;
+            margin: 5px;
+            background-color: darkgray;
+            color: white;
+        }
+        .pagination .page.active{
+            background-color: salmon;
+        }
+    </style>
+</head>
+<body>
+    <ul>
+        {% for row in user_list %}
+            <li>{{ row }}</li>
+        {% endfor %}
+    </ul>
+{#    {% include "page_tag.html" %}#}
+
+    <select id="pg" onchange="changePage(this);">
+        <option value="10">10</option>
+        <option value="20">20</option>
+        <option value="30">30</option>
+        <option value="50">50</option>
+    </select>
+    <div class="pagination">
+        {{ page_str }}
+    </div>
+
+    <script src="/static/jquery-1.12.4.js"></script>
+    <script src="/static/jquery.cookie.js"></script>
+    <script>
+        $(function () {
+            var v = $.cookie("per_page_count")
+            $("#pg").val(v)
+        })
+         function changePage(ths) {
+            var v = $(ths).val();
+            $.cookie("per_page_count",v);
+            location.reload();
+         }
+    </script>
+</body>
+</html>

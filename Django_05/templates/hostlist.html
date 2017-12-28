@@ -1,0 +1,275 @@
+{% extends "master.html" %}
+{% block css %}
+    <style>
+        .pagination{
+            padding-right: 5px;
+            background-color: #eeeeee;
+            color: green;
+        }
+        .shadow{
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            right: 0;
+            left: 0;
+            background-color: black;
+            opacity: 0.6;
+            z-index: 9;
+        }
+        .add-modal, .edit-modal,.del-modal{
+            position: fixed;
+            height: 300px;
+            width: 400px;
+            top: 50%;
+            right: 50%;
+            margin-right: -200px;
+            margin-top: -150px;
+            background-color: white;
+            border: 1px solid #eeeeee;
+            z-index: 10;
+        }
+        .add_button{
+            text-align: left;
+        }
+        .hide{
+            display: none;
+        }
+        .err{
+            color:red;
+        }
+        .suc{
+            color: green;
+        }
+    </style>
+{% endblock %}
+
+{% block username %}
+    {{ username }}
+{% endblock %}
+
+{% block body-content %}
+                <div class="add_button">
+                    <input id="add_element" type="button" value="添加"/>
+                    <input id="many_del_element" type="button" value="删除"/>
+                    <input id="all_choice" type="button" value="全选"/>
+                    <input id="cancel_choice" type="button" value="取消"/>
+                    <input id="reverse_choice" type="button" value="反选"/>
+                    <span style="color: #2b542c" id="manydel"></span>
+                </div>
+                 <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>主机名称</th>
+                            <th>ip地址</th>
+                            <th>端口</th>
+                            <th>主机组</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tb">
+                        {% for row in host_list %}
+                            <tr name="g_id" g_id="{{ row.g_id }}" h_id = "{{ row.id }}">
+                                <td name="hostname">{{ row.hostname }}</td>
+                                <td name="ip">{{ row.ip }}</td>
+                                <td name="port">{{ row.port }}</td>
+                                <td name="g_name">{{ row.g.name }}</td>
+                                <td>
+                                    <a class="edit_element">编辑</a>|
+                                    <a class="del_element">删除</a>|
+                                    <input name="h_id" h_id = "{{ row.id }}" type="checkbox"/>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                {{ page_str }}
+                    <select id="pg" onchange="changePage(this);">
+                        <option value="10">10</option>
+                        <option value="20">20</option>
+                        <option value="30">30</option>
+                        <option value="50">50</option>
+                    </select>
+{% endblock %}
+
+{% block modal %}
+    <div class="shadow hide"></div>
+    <div class="add-modal hide">
+        <form id="add_fm" action="/addhost" method="post">
+            <div>
+                <input type="text" name="hostname" placeholder="主机名称"/>
+            </div>
+            <div>
+                <input type="text" name="ip" placeholder="IP地址"/>
+            </div>
+            <div>
+                <input type="text" name="port" placeholder="端口号"/>
+            </div>
+            <div>
+                <select name="g_id">
+                    {% for row in hostgroup_list %}
+                        <option value="{{ row.id }}">{{ row.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <input type="submit" value="确定"/>
+            <a id="ajax_add_element" style="background-color: #eeeeee">ajax添加</a>
+            <input id="add_cancel_element" type="button" value="取消"/>
+            <span id="err_msg"></span>
+        </form>
+    </div>
+
+    <div class="edit-modal hide">
+    <form id="edit_fm" action="/edithost" method="post">
+        <div>
+            <input style="display: none;" type="text" name="h_id"/>
+        </div>
+        <div>
+            <input type="text" name="hostname" placeholder="主机名称"/>
+        </div>
+        <div>
+            <input type="text" name="ip" placeholder="IP地址"/>
+        </div>
+        <div>
+            <input type="text" name="port" placeholder="端口号"/>
+        </div>
+        <div>
+            <select name="g_id">
+                {% for row in hostgroup_list %}
+                    <option value="{{ row.id }}">{{ row.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <input type="submit" value="确定"/>
+        <input id="edit_cancel_element" type="button" value="取消"/>
+    </form>
+</div>
+    <div class="del-modal hide">
+    <form id="del_fm" action="/delhost" method="post">
+        <div>
+            <input style="display: none;" type="text" name="h_id"/>
+        </div>
+        <div>
+            <input type="text" name="hostname" placeholder="主机名称"/>
+        </div>
+        <input type="submit" value="确定"/>
+        <input id="del_cancel_element" type="button" value="取消"/>
+    </form>
+</div>
+{% endblock %}
+
+{% block jscontent %}
+    <script src="/static/bootstrap-3.3.7-dist/js/jquery-1.12.4.js"></script>
+    <script src="/static/bootstrap-3.3.7-dist/js/jquery.cookie.js"></script>
+    <script>
+
+        $("#ajax_add_element").click(function () {
+                $.ajax({
+                    url:"/ajaxaddhost",
+                    type:"POST",
+                    dataType:"JSON",
+                    data:$("#add_fm").serialize(),
+                    success:function (data) {
+                        if(data.status){
+                            $("#err_msg").addClass("suc");
+                            $("#err_msg").text(data.data);
+                            $("#add_fm").find("input[name='hostname']").val("");
+                            $("#add_fm").find("input[name='ip']").val("");
+                            $("#add_fm").find("input[name='port']").val("");
+                        }else {
+                            $("#err_msg").text(data.error);
+                            $("#err_msg").add("err");
+                        }
+                    }
+                })
+            })
+        $("#add_element").click(function () {
+            $(".shadow,.add-modal").removeClass("hide");
+        })
+        $("#add_cancel_element").click(function () {
+            $(".shadow,.add-modal").addClass("hide");
+        })
+        $("#all_choice").click(function () {
+            var tags =  $("#tb").find("input");
+            tags.each(function () {
+                this.checked = true;
+            })
+        })
+        $("#cancel_choice").click(function () {
+            var tags =  $("#tb").find("input");
+            tags.each(function () {
+                this.checked = false;
+            })
+        })
+        $("#reverse_choice").click(function () {
+            var tags =  $("#tb").find("input");
+            tags.each(function () {
+                if(this.checked){
+                    this.checked = false;
+                }else{
+                    this.checked = true;
+                }
+            })
+        })
+
+        $("#many_del_element").click(function () {
+            var del_list = [];
+            var tags =  $("#tb").find("input");
+            tags.each(function () {
+                if(this.checked){
+                   var hid =  $(this).attr("h_id");
+                   del_list.push(hid);
+                }
+            })
+            console.log(del_list);
+            $.ajax( {
+                url:"/manydelhost",
+                type:"POST",
+                traditional: true,
+                data:{"del_list":del_list},
+                success:function (data) {
+                    $("#manydel").text(data);
+                    location.reload();
+                }
+            })
+        })
+        $(".edit_element").click(function () {
+            $(".shadow,.edit-modal").removeClass("hide");
+            var hostname =  $(this).parent().parent().find("td[name='hostname']").text();
+            var ip =  $(this).parent().parent().find("td[name='ip']").text();
+            var port =  $(this).parent().parent().find("td[name='port']").text();
+            var g_id = $(this).parent().parent().attr("g_id");
+            var h_id = $(this).parent().parent().attr("h_id");
+            $("#edit_fm").find("input[name='hostname']").val(hostname);
+            $("#edit_fm").find("input[name='ip']").val(ip);
+            $("#edit_fm").find("input[name='port']").val(port);
+            $("#edit_fm").find("input[name='h_id']").val(h_id);
+            $("#edit_fm").find("select").val(g_id);
+
+        })
+        $("#edit_cancel_element").click(function () {
+            $(".shadow,.edit-modal").addClass("hide");
+        })
+        $(".del_element").click(function () {
+{#            var tag = $(this).parent().parent();#}
+{#            tag.remove();#}
+            $(".shadow,.del-modal").removeClass("hide");
+            var hostname =  $(this).parent().parent().find("td[name='hostname']").text();
+            var h_id = $(this).parent().parent().attr("h_id");
+            $("#del_fm").find("input[name='hostname']").val(hostname);
+            $("#del_fm").find("input[name='h_id']").val(h_id);
+        })
+        $("#del_cancel_element").click(function () {
+            $(".shadow,.del-modal").addClass("hide");
+        })
+        $(function () {
+            var v = $.cookie("pagination_nums")
+            $("#pg").val(v)
+        })
+         function changePage(ths) {
+            var v = $(ths).val();
+            $.cookie("pagination_nums",v);
+            location.reload();
+         }
+
+    </script>
+{% endblock %}

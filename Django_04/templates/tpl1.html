@@ -1,0 +1,23 @@
+{% extends "master.html" %}
+
+{% block title %}
+    用户
+{% endblock %}
+
+{% block css %}
+    <style>
+        body{
+            background-color: red;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <h1>用户信息</h1>
+    <ul>
+        {% for i in u %}
+            <li>{{ i }}</li>
+        {% endfor %}
+    </ul>
+    {% include "tag.html" %}
+{% endblock %}

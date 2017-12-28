@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <form action="/login" method="post">
+        {% csrf_token %}
+        <input type="text" name="user"/>
+        <input type="text" name="pwd"/>
+        <input type="checkbox" name="rmb" value="1"/>  //是否保持登录
+        <input type="submit" value="提交"/>
+        <input id="btn1" type="button" value="按钮1"/>
+        <input id="btn2" type="button" value="按钮2"/>
+    </form>
+    <script src="/static/jquery-1.12.4.js"></script>
+    <script src="/static/jquery.cookie.js"></script>
+    <script>
+        $(function () {
+            //全局生效,xhr是代表xmlhttprequest
+            $.ajaxSetup({
+                beforeSend:function (xhr,settings) {
+                    xhr.setRequestHeader("X-CSRFtoken",$.cookie("csrftoken"));
+                }
+            })
+            $("#btn1").click(function () {
+                $.ajax({
+                    url:"/login",
+                    type:"POST",
+                    data:{"user":"root","pwd":123},
+                    //只在这个ajax请求中生效
+                    headers:{"X-CSRFtoken":$.cookie("csrftoken")},
+                    success:function (data) {
+
+                    }
+                })
+            })
+            $("#btn2").click(function () {
+                $.ajax({
+                    url:"/login",
+                    type:"POST",
+                    data:{"user":"root","pwd":123},
+                    success:function (data) {
+
+                    }
+                })
+            })
+        })
+    </script>
+</body>
+</html>

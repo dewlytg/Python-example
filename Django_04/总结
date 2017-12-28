@@ -1,0 +1,94 @@
+1.cookie,客户端保留在浏览器中的字典,可以在服务端设置,也可以在客户端设置（使用jquery-cookie组件）
+    views.py 如何验证通过就设置cookie
+        ret = redirect("/index")
+        # 给客户端浏览器设置cookie
+        # ret.set_cookie("username",u)
+        # max_age 设置cookie的过期时间
+        # ret.set_cookie("username",u,max_age=10)
+        # import datetime
+        # current_date = datetime.datetime.utcnow()
+        # expires也是设置过期时间
+        # current_date = current_date + datetime.timedelta(seconds=10)
+        # ret.set_cookie("username",u,expires=10)
+        ret.set_cookie("username",u)
+        # httponly设置只能在http的请求的cookie中看到,document.cookies 不能获取
+        ret.set_cookie("http_msg","abc",httponly=True)
+        # set_signed_cookie 加密cookie,salt="加密字符串",机密也要用这个字符串
+        # ret.set_signed_cookie(salt="abcdefg")
+        # request.get_signed_cookie(salt="abcdefg")
+        return ret
+
+    request.COOKIES.get("username")
+
+    template中html文件客户端配置cookie
+        $(function () {
+            var v = $.cookie("per_page_count");
+            $("#pg").val(v);
+        })
+        function changePage(ths) {
+            var v = $(ths).val();
+            $.cookie("per_page_count",v);
+            location.reload();
+        }
+
+    from django.utils.safestring import mark_safe  防止XSS
+    make_safe("html文件的内容")
+
+2.登录验证FBV和CBV
+    def auth(func):
+    def inner(request,*args,**kwargs):
+        username = request.COOKIES.get("username")
+        if not username:
+            return redirect("/login")
+        return func(request,*args,**kwargs)
+    return inner
+
+    @auth
+    def index(request):
+        username = request.COOKIES.get("username")
+        return render(request, "index.html", {"username": username})
+
+    from django.views import View
+    from django.utils.decorators import method_decorator
+
+    @method_decorator(auth,name="dispatch")
+    class Order(View):
+
+        # @method_decorator(auth)
+        # def dispatch(self, request, *args, **kwargs):
+        #     return super(Order,self)(request, *args, **kwargs)
+
+        # @method_decorator(auth)
+        def get(self,request):
+            username = request.COOKIES.get("username")
+            return render(request, "index.html", {"username": username})
+
+        def post(self,request):
+            username = request.COOKIES.get("username")
+            return render (request, "index.html", {"username": username})
+
+3.模板中html文件如何使用模板html文件
+    {% extends "master.html" %}   加载母版
+    {% load xxoo %}   加载自定义的函数必须在根目录创建一个templatetags文件夹，然后编写xxoo.py
+    {{ username }}
+    {{ username|lower }}
+    {{ username|truncatewords:"1" }}
+    {% zhangsan 1 2 %}
+    {{ "abc"|lisi:"123" }}
+
+        xxoo.py文件内容
+        from django import template
+        register = template.Library()
+
+        @register.simple_tag
+        def zhangsan(arg1,arg2):
+            return arg1 + arg2
+
+        @register.filter
+        def lisi(arg1,arg2):
+            return arg1 + arg2
+
+    {% block title %}
+       ......
+    {% endblock %}
+    {% include "tag.html" %}
