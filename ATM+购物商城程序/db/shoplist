@@ -1,0 +1,12 @@
+[
+{"name":"iphone","price":5888},
+{"name":"apple","price":10},
+{"name":"foo","price":25},
+{"name":"bike","price":500},
+{"name":"car","price":10000},
+{"name":"bed","price":175},
+{"name":"breakfast","price":8},
+{"name":"water","price":1},
+{"name":"book","price":17},
+{"name":"computer","price":2000}
+]

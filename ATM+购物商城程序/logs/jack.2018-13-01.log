@@ -1,0 +1,4 @@
+Sat 13 Jan 2018 17:51:51 INFO Logging.py 39 9656 [jack] 收到 [pony] 的转账 [10]
+Sat 13 Jan 2018 18:23:12 INFO Logging.py 39 11068 [jack] 收到 [pony] 的转账 [100]
+Sat 13 Jan 2018 18:23:55 INFO Logging.py 39 9952 [jack] 收到 [pony] 的转账 [800]
+Sat 13 Jan 2018 18:24:51 INFO Logging.py 39 10036 [jack] 转给 [pony] 金额是 [30]
