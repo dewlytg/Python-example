@@ -1,0 +1,17 @@
+from daemon import runner
+
+class DaemonRun():
+    def __init__(self):
+        self.stdin_path = '/dev/null'
+        self.stdout_path = '/dev/tty'
+        self.stderr_path = '/dev/tty'
+        self.pidfile_path = '/tmp/testdaemon.pid'
+        self.pidfile_timeout = 5
+
+    def run(self):
+        "your code"
+
+app = DaemonRun()
+daemon_runner = runner.DaemonRunner(app)
+# This ensures that the logger file handle does not get closed during daemonization
+daemon_runner.do_action()
