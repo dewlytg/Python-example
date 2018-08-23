@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .my-div{
+            {#top right left bottom 盒子全局定位，margin-top,margin 盒子相对于全局定位的的边距盒子之间的距离，不会影响盒子大小，padding 盒子内容相对于盒子的间距盒子中内容的到边框的距离，会影响盒子大小，border 盒子本身的边框#}
+            /*-----------------------*/
+            left: 20px;
+            top: 20px;
+            bottom: 20px;
+            right: 20px;
+            /*-----------------------*/
+            margin: 0 auto; /*居中*/
+            margin-left: 20px;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            margin-right: 20px;
+            /*-----------------------*/
+            padding-left: 20px;
+            padding-top: 20px;
+            padding-bottom: 20px;
+            padding-right: 20px;
+            /*-----------------------*/
+            height: 200px!important; /*强制继承*/
+            width: 100%;
+            border: 1px solid red;
+            border-radius: 20%; /*边框变圆*/
+            opacity: 0.1; /*透明度*/
+            word-spacing: 2px; /*字体之间距离*/
+            font-family: "Bitstream Vera Sans Mono", Monaco, "Courier New", Courier, monospace; /*字体*/
+            font-size: small; /*字体大小*/
+            /*-----------------------*/
+            min-height: 100px; /*最小高度*/
+            min-width: 200px; /*最小宽度*/
+            /*-----------------------*/
+            line-height: 200px; /*文本上下对齐*/
+            text-align: center; /*文本左右对齐*/
+            vertical-align: 20px; /*调整次标签和别的标签错位的问题*/
+            /*-----------------------*/
+            background-color: #2459a2;
+            background: image("xx.png") no-repeat 0 -199px; /*后面的定位是在背景图片很大的情况来选择图标指定的位置*/
+            /*-----------------------*/
+            float: left; /*盒子左悬浮*/
+            clear: both; /*清除浮动*/
+            overflow: hidden; /*内容超出出现滚动条*/
+            /*-----------------------*/
+            position: fixed; /*回到顶部的小盒子*/
+            position: relative; /*父标签中设置*/
+            position: absolute; /*子标签中设置*/
+            /*-----------------------*/
+            z-index: auto; /*模态对话框*/
+            position: fixed; /*模态对话框*/
+            opacity: 0.1; /*模态对话框*/
+            /*tip: 悬浮和位置不要一起使用在一个css中*/
+        }
+
+        /*伪类*/
+        a:hover{}
+        a:active{}
+        a:visited{}
+
+        /*适用于所有body，div，li标签*/
+        body {}
+        div {}
+        li {}
+
+        /*适用于class=my-div的标签*/
+        .my-div {}
+
+        /*适用于id=myid的标签*/
+        #myid {}
+
+        /*找div标签中包含class=div1的标签，子类*/
+        div .div1{}
+
+        /*找div标签中包含class=div1的标签，儿子类*/
+        .my-div>.div1{
+            background-color: red;
+            height: 100px;
+        }
+
+        /*所有div和p标签*/
+        div,p{}
+
+        /*给指定class和id设置css的权限大于直接给标签设置权限，不论先后都是class和id的css生效*/
+    </style>
+</head>
+<body>
+    <!--常用块级标签 div p-->
+    <div class="my-div" id="myid">
+        <div class="div1">11111</div>
+    </div>
+
+    <p>段落</p>
+
+    <!--常用内联标签-->
+    <a href="#" target="_blank">跳转</a>
+    <span>小提示</span>
+
+    <!--提交数据到后台-->
+    <form action="http://xx.xx.xx./api" method="post">
+        <input type="text">
+        <input type="password">
+        <input type="radio">
+        <input type="checkbox">
+        <input type="button">
+        <input type="submit">
+
+        <select>
+            <optgroup label="city">
+                <option>北京</option>
+                <option>上海</option>
+                <option>广州</option>
+                <option>天津</option>
+                <option>武汉</option>
+            </optgroup>
+        </select>
+    </form>
+
+    <textarea>文本区域</textarea>
+    <h1>加黑加粗</h1>
+    <br>
+    <b>加粗</b>
+    <i>斜体</i>
+    <strong>加粗</strong>
+
+    <!--序列-->
+    <ol>
+        <li>a</li>
+        <li>b</li>
+        <li>c</li>
+        <li>d</li>
+        <li>e</li>
+    </ol>
+    <ul>
+        <li>a</li>
+        <li>a</li>
+        <li>a</li>
+        <li>a</li>
+        <li>a</li>
+    </ul>
+    <dl>
+        <li>car</li>
+        <li>bus</li>
+        <li>orange</li>
+        <li>minister</li>
+        <li>ministry</li>
+    </dl>
+
+    <table>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+    </table>
+</body>
+</html>
