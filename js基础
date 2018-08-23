@@ -1,0 +1,984 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<!--<body onload="fun1()">-->
+
+<!--<p id="id1">hello p</p>-->
+<!--<input type="text" id="clock" style="width: 249px">-->
+<!--<input type="button" value="begin" onclick="begin_click()">-->
+<!--<input type="button" value="End" onclick="End()">-->
+<!--<input type="button" value="timeout" onclick="f1()">-->
+
+<script>
+////////////////////////////////////////////////////////js的五种基本数据类型////////////////////////////////////////////////////////
+    //1  Number 包括整型和浮点型 1 2 34
+    //2  String 字符串数据类型  "" 或''构成
+
+        // var s1="hello"
+        // var s2="\u4f60\u597d\n欢迎来到\"JavaScript世界\""
+        // console.log(s1);
+        // console.log(s2);
+
+    //3  Boolean : true  false 用于条件判断！
+
+        // if (false){
+        //  alert("success!")
+        // }
+    //4 Undefined:undefined
+
+        // var a;  //如果声明了某个变量，但是未对它赋值，则该变量是Undefined类型
+        // console.log(a);
+
+    // 5 null: 占一个对象位置
+
+        // var obj1=new Animal();
+        // var obj2=null;
+        // console.log(obj1);
+        // console.log(obj2);
+
+    //数据类型转换
+
+        // alert(1+"hello");
+        // alert(1+true);
+        // alert(1+false);
+        // alert(2==true);
+        // alert("hello"+true);
+        //
+        // alert(parseInt(3.14));
+        // alert(parseInt("3.14"));
+        // alert(parseInt("3.14a"));
+        // alert(parseInt("3.a14"));
+        // alert(parseInt("a3.94"));   //NaN: 当字符串转换程数字失败时就是NaN;属于Number;
+
+
+        // alert(NaN==0);
+        // alert(NaN>0);
+        // alert(NaN<0);
+        // alert(NaN==NaN) ;  //NaN数据在表达式中一定结果为false，除了！=
+        // alert(NaN!=0);
+        //
+        // var i=10;
+        // var s="hello";
+        // var b=false;
+        // var u=undefined;
+        // var n=null;
+        // var obj= new Object();
+        //
+        // console.log(typeof(i));
+        // console.log(typeof(s));
+        // console.log(typeof(b));
+        // console.log(typeof(u));
+        // console.log(typeof(n));
+        // console.log(typeof(obj));
+        //
+        // var s=1;
+        // s="hello"
+        // alert(s)
+        //
+
+////////////////////////////////////////////////////////js 运算符////////////////////////////////////////////////////////
+//         var a=1;
+//         // var b=a++;         //先赋值后加减 a+=1 ===== a=a+1 =====
+//         var b=++a;            //先加减后赋值
+//
+//         alert(b);
+//         alert(a);
+//
+//         var x=1;
+//         alert(x++); //x=x+1  1
+//         alert(++x); //x=x+1  3
+//         alert(--x); //x=x-1  2
+//         alert(x--); //x=x-1  2
+//         alert(x)    // 1
+
+
+
+        // 一元加减法，正数，负数
+
+        // var a=3;
+        // var a="3";
+        // var a="3.2";
+        // var a="123a456";
+        // var a="123a";
+        // var a="a123";
+
+
+        // b=+a;
+        // b=-a;
+        // alert(b);
+        // alert(typeof(b));
+
+        // && 逻辑与         1 && 0 ---->0
+        //                  0 && 1 ---->0
+        //                  0 && 0 ---->0
+        //                  1 && 1 ---->1
+
+        // || 逻辑或         1 || 0 ---->1
+        //                  0 || 1 ---->1
+        //                  0 || 0 ---->0
+        //                  1 || 1 ---->1
+
+        // !  逻辑非
+        // var a=1;
+        // if(a<10 && a>0){
+        //    ++a;
+        //    alert(a)
+        // }
+        //
+        // if (null && true){
+        //    alert(1);
+        // }
+
+        //[12,1,2],[]
+        //"22",""
+        //new Object(),null
+        //
+        // if (new Object()){
+        //     alert(1);
+        // }else {
+        //     alert(2);
+        // }
+        //
+        // if (true && new Object()){
+        //    alert("hello")
+        // }
+
+
+        // 3<<2 移位
+        //
+        // 00001100=12
+        //
+        // 00001100>>1=00000110=6
+        //
+        // alert(3<<2);
+        // alert(12>>1);
+        //
+        // if ( 3 & 2){
+        //     alert("hello");
+        // }else {
+        //     alert("yes");
+        // }
+        // 转换为二进制后的交集
+        // 00000001 00000010 00000011 分别代表 1 2 3
+        // alert(3&2);
+        // alert(1&2);
+
+        // == 代表值相等，===代表值相等而且类型也一样
+        // alert(2==2);
+        // alert(2=="2");
+        // alert(2==="2");
+
+        //
+        //
+        // alert(25<3);
+        // alert("ba2566545"<"bab3");
+        // alert("25"<3)
+
+
+        // alert(3 && 2)
+        // alert(true && 3)
+
+        // 1、(b && c)：b是false，此时不需要判断c，因为不管c是true是false，最终结果一定是false，因此返回当前判断对象b，也就是0；
+        // 2、(d && e)：d是true，这个时候判断e，此时不管e是true，是false，返回结果一定是e，e为true，因此返回"Hello"；
+        // 3、(a || b)：a是true，此时不管b是true是false，结果都是true，所以不判断b，所以返回当前判断对象a，因此返回new Object()；
+        // 4、(a || e)：同上，因此返回a。这个表达式最终结果为a，也就是new Object()
+
+         // var a=new Object(),b=0,c=Number.NaN,d=1,e="Hello";
+         // alert(b && c);
+         // alert(d && e);
+         // alert(a || b);
+         // alert(a || e);
+
+////////////////////////////////////////////////////////js控制语句////////////////////////////////////////////////////////
+
+        // var week="Sunday";
+        // if (week=="Sunday"){
+        //     alert("8");
+        // }else {
+        //     alert("not 8");
+        // }
+        //
+        // var week="Sunday";
+        // if (week=="Sunday"){
+        //     alert("7");
+        // }else if(week=="周六"){
+        //     alert("6");
+        // }else {
+        //     alert("not 6 7");
+        // }
+       //
+       // var x=1;
+       // switch(x){
+       //     case 1:y="星期一";    break;
+       //     case 2:y="星期二";    break;
+       //     case 3:y="星期三";    break;
+       //     case 4:y="星期四";    break;
+       //     case 5:y="星期五";    break;
+       //     case 6:y="星期六";    break;
+       //     case 7:y="星期日";    break;
+       //     default: y="未定义";  break;
+       //  }
+       //  alert(y);
+
+
+        // for循环 表达一
+        // var a=[1,"hello",true];
+        //
+        // for (var i in a){
+        //     console.log(i);
+        //     console.log(a[i]);
+        // }
+
+        // for循环求1-100和
+        // var ret=0;
+        // for (var i=1;i<101;i=i+1){
+        //     ret+=i;
+        // }
+        // alert(ret);
+        //
+        // for (var i=1;i<=6;i++){
+        //     document.write("<H"+i+">hello</H "+i+">");
+        //     document.write("<br>");
+        // }
+
+        // obj={"11":"111","22":[1,2]};
+        //
+        // alert(typeof(obj))    //object
+        // alert(obj)   //[object Object]
+        // for (var i in obj){
+        //     console.log(i);
+        //     console.log(obj[i]);
+        // }
+
+////////////////////////////////////////////////////////while 循环////////////////////////////////////////////////////////
+
+        // var i=1;
+        // var ret=0;
+        // while (i<101){
+        //     ret+=i;
+        //     i++;
+        //     }
+        // alert(ret)
+
+
+        // function func1() {
+        //
+        //    // throw new Error("胡不信")
+        //
+        //    try{
+        //        var b=123;
+        //        alert(b);
+        //        throw new Error("hello")
+        //        return 666
+        //    }
+        //    catch(e){
+        //        alert(e);
+        //    }
+        //    finally {
+        //        alert("success!")
+        //    }
+        // }
+        //
+        // func1()
+
+// ------------------------------------js 对象------------------------
+        // var s="hello";
+        // var s2=new String("hello2")
+        // alert(s)
+        // alert(s2)
+
+// ----------------------------function 对象--------------------------
+
+        // function 创建方式1  (推荐方式)
+        //
+        // function func1() {
+        //     alert(123);
+        //     return 8;
+        // }
+        //
+        // var ret=func1();
+        // alert(ret);
+
+        // var func2=new Function("参数1","参数n","函数体");
+        // var add=new Function("a","b","c","alert(a+b)");
+        //
+        // alert(add.length); // add形参的个数
+
+//-------------------------------function属性和方法-------------------
+
+        // function f() {
+        //    return 8
+        // }
+        //
+        // alert(void(f())) //void()不要返回值
+
+
+        // function func1() {
+            // b=4;
+            // var b=3;  //(尽量采用局部变量)
+        // }
+        // func1();
+        // alert(b);
+
+        // var ret=0
+        // function func1(a,b) {
+        //     ret=a+b;
+        //     return ret;
+        // }
+        //
+        // alert(func1(1,5,6,9))
+
+        // function a(a,b){
+        //     alert(a+b);
+        // }
+        // var a=1;
+        // var b=2;
+        // a(a,b)
+
+// ----------------------------arguments对象------------------------
+        // var ret=0;
+        // function add() {
+        //     console.log(arguments.length);
+        //     console.log(arguments);
+        //
+        //     for (var i in arguments){
+        //         ret+=arguments[i];
+        //         }
+        //     return ret;
+        // }
+        //
+        // alert(add(1,2,3,4,5));
+
+
+        // function func2() {
+        //     if (arguments.length!=3){
+        //         throw new Error("param should be 3");
+        //     }
+        // }
+        // func2(1,2,3,45);
+
+        //
+        // var func3=function () {
+        //     alert(123)
+        // };
+        // func3();
+
+//--------------自执行函数-------------------------------------------
+
+
+        // (function(arg){
+        //     console.log(arg);
+        // })('123')
+
+
+        //
+        // dic={"1":"111"};
+        // console.log(dic);
+        // ret=dic.toString();
+        // console.log(typeof(ret));
+
+
+////////////////////////////////////////////////////////typeof and instanceof////////////////////////////////////////////////////////
+        //var s="hello";
+        //var i=8;
+        // typeof 只能判断基本数据类型;
+        //alert(typeof(s));
+        //alert(typeof(i));
+
+        // var s2=new String("hello2");
+        // alert(typeof(s2));
+        // alert( s2 instanceof String);
+
+        // var n=new Number(2);
+        // alert(typeof (n));
+        // alert( n instanceof String);
+
+////////////////////////////////////////////////////////String////////////////////////////////////////////////////////
+        // String对象的属性 length
+        // var s = "heEllEo";
+        // alert(s.length);
+
+        // 遍历字符串：
+        // for (var i in s){console.log(s[i])};
+
+        // 编排方法：
+        // document.write(s.italics());
+        // document.write(s.bold());
+        // document.write(s.anchor("alex"));
+
+        // 大小写转换：
+        // console.log(s.toUpperCase());
+        // console.log(s.toLowerCase());
+
+        // 获取指定字符：
+        // console.log(s.charAt(3));
+        // console.log(s.charCodeAt(3));
+
+        // 查询字符串match();  search()：
+        // console.log(s.search("l"));  //返回的第一个匹配结果的索引值
+        // console.log(s.match("E")[0]);   // 返回数组，里面是所有匹配结果
+        // console.log(s.match("E")[1]);   // 返回数组，里面是所有匹配结果
+        //
+        // console.log(s.indexOf("l"));
+        // console.log(s.lastIndexOf("l"));
+
+        // replace concat split
+        // console.log(s.replace("E","e"));
+        // console.log(s.split("E"));
+        // console.log(s.concat(" world"))
+
+        // 截取字符串
+        // console.log(s.substr(1,4));
+        // console.log(s.substring(1,4));
+        // console.log(s.slice(1,4));
+
+
+////////////////////////////////////////////////////////数组////////////////////////////////////////////////////////
+        //创建方式一
+        // var arr=[1,2,3,6];
+        //创建方式二
+        // var arr2=new Array(5,"hello",true,[1,3]);
+        // console.log(arr.length);
+        // console.log(arr2.length);
+        // console.log(arr2);
+
+        // var arr3=new Array();
+        // 如果 采用初始化对象方式创建数组，如果里面只有一个值而且是一个数字，那么数字表示的是长度而不是内容
+        // var arr4=new Array(3);
+        // console.log(arr4[0]);
+        // console.log(arr4[1]);
+        // console.log(arr4[2]);
+        // console.log(arr4[3]);
+        // console.log(arr4);
+
+        // ---------数组是可变长的
+        // arr4[5]=10;
+        // console.log(arr4.length)
+
+
+        //------------二维数组--------
+
+        // var arr2=new Array(5,"hello",true,[1,3]);
+        // alert(arr2[3][1]);
+
+
+        //数组对象的方法
+        // join方法：将数组内的字符串拼接成一个字符串,join方法的对象不同于py，在js是Array
+        // var ret=["hello"," mxiaohu"].join("+++++");
+        // alert(ret);
+
+
+        // shift unshift    pop push----------栈操作--------
+        //队列：先进先出  栈：先进后出
+
+
+        // var arr5=[1,4,6];
+        // arr5.push(13);
+        // arr5.push("hello",7);
+        // console.log(arr5);
+        // var ret=arr5.pop();
+        // alert(ret);
+
+        // arr5.unshift(45);
+        // console.log(arr5);
+        // arr5.shift();
+        // console.log(arr5);
+
+
+    //------------------------------------sort reverse-----------------
+
+
+       //  var arr6=["3a",1,6,6,3,"3",7];
+       //  arr6.reverse();
+       //  console.log(arr6);
+       //  console.log(arr6.sort(mysort));
+       //
+       //  function mysort(a,b) {
+       //      return a-b;
+       //
+       //         if (a>b){
+       //             return 3;
+       //         }else if(a<b){
+       //             return -3;
+       //         }else {
+       //             return 0
+       //         }
+       //  }
+       //
+       // var arr6=[1,6,3,2,100];
+       // console.log(arr6.concat(4,5));
+
+
+////////////////////////////////////////////////////////日期////////////////////////////////////////////////////////
+
+        //创建方式：
+
+        // var date_obj= new Date();
+        // alert(date_obj.toLocaleString());
+        //
+        // var date_obj2= new Date("2016 3 23 12:20");
+        // alert(date_obj2.toLocaleString());
+        //
+        // var date_obj3= new Date(50000000);
+        // alert(date_obj3.toLocaleString());
+        // alert(date_obj3.toUTCString());
+        //
+        // function getTime() {
+        //     var date_obj= new Date();
+        //     console.log(date_obj.getFullYear());
+        //     console.log(date_obj.getMonth());
+        //     console.log(date_obj.getDate());
+        //     console.log(date_obj.getDay());
+        //     console.log(date_obj.getHours());
+        //     console.log(date_obj.getMinutes());
+        //     console.log(date_obj.getSeconds());
+        //     console.log(date_obj.getHourMinuteSecond);
+        //     console.log(date_obj.getMilliseconds());
+        //     var year=date_obj.getFullYear();
+        //     var month=date_obj.getMonth()+1;
+        //     var day=date_obj.getDate();
+        //     var hour=date_obj.getHours();
+        //     var minute=date_obj.getMinutes();
+        //     var seconds=date_obj.getSeconds();
+        //     var week=date_obj.getDay();
+        //
+        //     return year+"年"+month+"月"+f(day)+"日"+" "+hour+": "+minute+" :"+seconds+" "+num_week(week)
+        // }
+        //
+        // function f(num) {
+        //     if (num<10){
+        //          return "0"+num;
+        //     }
+        //     return num;
+        // }
+        //
+        // function num_week(n) {
+        //     week=["星期日","星期一","星期二","星期三","星期四","星期五","星期六"]
+        //     return week[n]
+        // }
+        // // Date方法：
+        // alert(getTime());
+
+        //2016年 11月 08日 15：02 星期二
+
+        // var date_obj= new Date();
+        // alert(date_obj.getTimezoneOffset())
+
+
+
+////////////////////////////////////////////////////////正则////////////////////////////////////////////////////////
+
+        // 方式一
+        // var re_obj=new RegExp("\d+","g");
+        // alert(re_obj.test("asdf3245lsdk"))
+        // 方式二
+        // var re_obj2=/\d+/g;
+        // alert(re_obj2.test("fjaks532jksfald"));
+
+
+        // var s="hello545dfsg45534";
+
+        // alert(s.match(/\d+/g)); //取出所有匹配的内容放到数组里
+        // alert(s.search(/\d+/g));// 取出第一个结果的索引值
+        //
+        // alert(s.split(/\d+/g));
+        // alert(s.replace(/\d+/g,"*"));
+
+////////////////////////////////////////////////////////Math////////////////////////////////////////////////////////
+
+
+        // alert(Math.random())//(0,1)
+        // alert(Math.round(2.8))
+        //
+        // var num=10*Math.random();
+        // num=Math.round(num);
+        // alert(num);
+        //
+        // // 内置对象--那来即用
+        // alert(Math.pow(2,4))
+        //
+        // window.alert(123)
+
+////////////////////////////////////////////////////////Windows对象////////////////////////////////////////////////////////
+
+
+        //
+        // function Timeout() {
+        //     alert(123);
+        // }
+        //
+        // function f1() {
+        //     var ID=setTimeout(Timeout,1000);
+        //     clearTimeout(ID);
+        // }
+        //
+        // function begin() {
+        //     var stime=getTime();
+        //     var ret=document.getElementById("clock");
+        //     ret.value=stime;
+        // }
+        //
+        // var ID;
+        // function begin_click() {
+        //      if (ID==undefined){
+        //           begin();
+        //           ID=setInterval(begin,1000);
+        //      }
+        //
+        // }
+        //
+        // function End() {
+        //     clearInterval(ID);
+        //     ID=undefined;
+        // }
+
+// -------------alert confirm  prompt-------------
+
+        // var ret=confirm("内容是否保存！");
+        //     alert(ret);
+        //
+        // if (ret){
+        //     }else {
+        // }
+        //
+        // var ret=prompt("hello");
+        // alert(ret);
+
+
+// ---------------------------------定时器-----
+
+        // function getTime() {
+        //     var date_obj= new Date();
+        //     var year=date_obj.getFullYear();
+        //     var month=date_obj.getMonth()+1;
+        //     var day=date_obj.getDate();
+        //     var hour=date_obj.getHours();
+        //     var minute=date_obj.getMinutes();
+        //     var seconds=date_obj.getSeconds();
+        //     var week=date_obj.getDay();
+        //
+        //     return year+"年"+month+"月"+f(day)+"日"+" "+hour+": "+minute+" :"+seconds+" "+num_week(week)
+        // }
+        //
+        // function f(num) {
+        //     if (num<10){
+        //     return "0"+num;
+        //     }
+        //     return num;
+        // }
+        //
+        // function num_week(n) {
+        //     week=["星期日","星期一","星期二","星期三","星期四","星期五","星期六"];
+        //     return week[n];
+        // }
+
+
+////////////////////////////////////////////////////////history////////////////////////////////////////////////////////
+
+        // history内部三种方法：forward back go 一个属性：length
+        // <input type="button" value="前进" onclick="func1();">
+        // <a href="histroy_lesson2.html">lesson2</a>
+        // <input type="button" value="后退" onclick="func2();">
+
+
+        // function func1() {
+        //     history.forward();
+        //     // history.go(2);
+        // }
+        //
+        // function func2() {
+        //     history.back();
+        //     // history.go(-1);
+        //     alert(history.length);
+        // }
+
+////////////////////////////////////////////////////////location////////////////////////////////////////////////////////
+
+
+        //<input type="button" value="重载" onclick="location.reload()">
+        //<input type="button" value="重载" onclick="location.href='http://www.baidu.com'">
+
+////////////////////////////////////////////////////////dom tree////////////////////////////////////////////////////////
+
+        // document element text attributes
+        // 注意：getfisrtChild可能是空白行，而使用fisrtElementChild就是一个标签，不会有问题
+        // var ele=document.getElementById("div1");
+        // var ele2=ele.firstChild;
+        // alert(ele2.nodeName);
+        // var ele3=ele.lastChild;
+        // alert(ele3.nodeName);
+        //
+        // var ele3=ele.childNodes;
+        // alert(ele3.length);
+        //
+        // var ele3=ele.parentNode;
+        // alert(ele3.nodeName);
+        //
+        // console.log(ele.nodeName);
+        // console.log(ele.nodeType);
+        // console.log(ele.nodeValue);
+        //
+        // //推荐方式
+        // var ele=document.getElementById("div1");
+        // var ele_son=ele.firstElementChild;
+        // alert(ele_son.nodeName)
+        // var ele_son=ele.lastElementChild;
+        // alert(ele_son.nodeName);
+        // var ele_sons=ele.children;
+        // alert(ele_sons.length);
+        // alert(ele_sons[0]);
+        //
+        // for (var i=0;i<ele_sons.length;i++){
+        //     console.log(ele_sons[i]);
+        // }
+        //
+        // var ele=document.getElementById("div1").firstElementChild;
+        // var sib=ele.nextElementSibling;
+        // alert(sib.nodeName);
+
+
+        // 全局查找：
+        // 通过ID
+        // var temp=document.getElementById("div1");
+
+        // 通过class
+        // var ele=document.getElementsByClassName("div2")[0];
+        // var ele2=ele.nextElementSibling;
+        // alert(ele2.innerHTML);
+
+        // 通过tag
+        // var tag=document.getElementsByTagName("p");
+        // alert(tag[0].innerHTML);
+
+        // 通过Name
+        // var Name=document.getElementsByName("alex");
+        // for(var i in Name){
+        //     console.log(Name[i].innerHTML);
+        // }
+
+        // 局部查找：
+        // var ele=document.getElementsByClassName("div3")[0];
+        //
+        // 局部查找可以通过 TagName
+        // var ele2=ele.getElementsByTagName("p");
+        // alert(ele2.innerHTML)
+        // alert(ele2.length)
+        //
+        // 局部查找可以通过 class
+        // var ele4=ele.getElementsByClassName("ppp");
+        // alert(ele4);
+        //
+        // 局部查找不可以通过 tagName
+        // var ele5=ele.getElementsByName("alex");
+        // alert(ele5);
+        //
+        // 局部查找不可以通过ID
+        // var ele3 =ele.getElementById("ppp");
+        // alert(ele3.innerHTML);
+
+////////////////////////////////////////////////////////event////////////////////////////////////////////////////////
+
+        // ondblclick 鼠标双击，onfocus 鼠标放在上面，onblur鼠标移开
+
+        // <p ondblclick="alert(123)">ppppp</p>
+        //
+        // <input class="keyword" type="text" onfocus="func1()" onblur="func2()" value="请输入用户名">
+        // <input type="text">
+
+        // function func1() {
+        //     var ky=document.getElementsByClassName("keyword")[0];
+        //     ky.value="";
+        // }
+        //
+        // function func2() {
+        // var ky=document.getElementsByClassName("keyword")[0];
+        //     if (ky.value.trim().length==0){
+        //     ky.value="请输入用户名";
+        //     }
+        // }
+
+        // onchange选项发生变化时候
+        // <select onchange="fun3()">
+        //     <option>上海</option>
+        //     <option>北京</option>
+        //     <option>河北</option>
+        // </select>
+
+        // function fun3() {
+        //     alert(1234);
+        // }
+
+        // onkeydown键盘按下，onkeyup键盘抬起
+        // <input type="button" value="press" onkeydown="fun1(event)" onkeyup="fun2(event)" >
+        // <input type="button" value="press2" onkeyup="fun2(event)">
+
+
+        // function fun1(e) {
+        //     console.log(456);
+        // }
+        // function fun2() {
+        //     console.log(123)
+        // }
+
+
+       //  onload windows窗口加载完成执行
+       //
+       //  <p id="id1">hello p</p>
+
+        // function fun1() {
+        //    var p=document.getElementById("id1");
+        //    alert(p.nodeName);
+        // }
+
+       // window.onload=function () {
+       //   var p=document.getElementById("id1")
+       //   alert(p.nodeName);
+       // }
+
+        // onmousedown鼠标按下，onmousemove移动走
+        // <div onmousedown="down()" onmousemove="move()" >div1</div>
+
+        // function down() {
+        //     console.log("down");
+        // }
+        // function move() {
+        //     console.log("move");
+        // }
+        // function out() {
+        //     console.log("out");
+        // }
+        // function over() {
+        //     console.log("over");
+        // }
+
+        // 绑定事件的两种方式
+        // <div id="div1" onclick="func1()">hello duv
+        // <p class="ppp">hello p</p>
+
+        // var obj=document.getElementsByClassName("ppp")[0];
+        // obj.onclick=function () {
+        //     alert(123);
+        // }
+        //
+        // function func1(){
+        //     alert("func1");
+        // }
+
+
+        //  preventDefault阻止事件发生
+        // <form id="form" onsubmit="return check()">
+        //      <input type="text" name="username">
+        //      <input type="submit" value="submit">
+        // </form>
+
+        // function check(event) {
+        //     alert("验证失败！");
+        //     return false;
+        //     event.preventDefault()
+        // }
+        //第二种：
+        // var Form=document.getElementById("form");
+        //     Form.onsubmit=function (event) {
+        //     alert(123);
+        //     return false;
+        // //  event.preventDefault();
+        // };
+
+
+
+////////////////////////////////////////////////////////事件传播////////////////////////////////////////////////////////
+
+
+        // #div1{
+        //     width: 300px;
+        //     height: 200px;
+        //     background-color: #84a42b;
+        // }
+        // #div2{
+        //     height: 100px;
+        //     width: 100px;
+        //     background-color: rebeccapurple;
+        // }
+
+        // <div id="div1" onclick="alert('div1')">
+        //     <div id="div2" onclick="func1(event)"></div>
+        // </div>
+
+        // function func1(e) {
+        //     alert('div2');
+        //     e.stopPropagation();
+        //
+        // }
+
+
+////////////////////////////////////////////////////////增加删除标签////////////////////////////////////////////////////////
+
+
+        // <div id="div1">
+        //     <div id="div2">hello div2</div>
+        //     <p>hello p</p>
+        // </div>
+        //
+        // <input type="button" value="添加p" onclick="add();">
+        // <input type="button" value="删除p" onclick="remove();">
+
+        // function remove() {
+        //     var ele=document.getElementById("div1");
+        //     var last_son=ele.lastElementChild;
+        //     ele.removeChild(last_son);
+        // }
+        //
+        // function add() {
+        //     var ele=document.getElementById("div1");
+        //     var son=document.createElement("p");
+        //     son.innerHTML="<em>hello ppppp</em>"
+        // //    son.innerText="<em>hello ppppp</em>";
+        //     ele.appendChild(son);
+        // }
+
+
+////////////////////////////////////////////////////////增加删除class////////////////////////////////////////////////////////
+
+        //
+        // .bigger{
+        //     font-size: 34px;
+        // }
+        //
+        // <div class="div1 div2 bigger" id="ID">
+        //     hello
+        //     <div>hello2</div>
+        //     <p>hello p</p>
+        // </div>
+
+        // var ele=document.getElementById("ID");
+        // alert(ele.className);
+        // ele.classList.add("bigger");
+        // ele.classList.remove("bigger");
+
+
+        // .bigger{
+        //     font-size: 40px;
+        //     color: #84a42b;
+        // }
+        //
+        // .small{
+        //     font-size: 10px;
+        //     color: rebeccapurple;
+        // }
+
+
+        // <div id="div1">fhslajkdfhsdjfsdasadfhlakjsdfhkjl</div>
+        // <input type="button" onclick="change('bigger')" value="big">
+        // <input type="button" onclick="change('small')" value="small">
+
+        // function change(a) {
+        //     var ele=document.getElementById("div1");
+        //     ele.classList.add(a);
+        // }
+
+</script>
+</body>
+</html>
