@@ -1,0 +1,78 @@
+django基础知识：
+1.安装django模块
+	pip install django
+
+2.新建django项目
+	django-admin startproject mysite
+
+3.为新建的django项目新建一个app
+	cd mysite
+	python manage.py startapp app01
+
+4.修改settings.py配置文件
+	INSTALLED_APPS = [
+						...
+						app01
+					]
+
+	STATICFILES_DIRS = (
+	    os.path.join(BASE_DIR,"static"),
+	)
+
+5.为新增的models数据库表初始化
+	python manage.py migrations
+	python manage.py migrate
+
+
+6.MVC和django的MTV,也是各组件之间为了保持松耦合关系
+	MVC：
+		M是modules模块，数据库，ORM
+		V是view视图，返回用户.html
+		C是controller控制器，负责用户请求处理，需要的话会调用数据库和.html
+
+	MTV:
+		M是modules模块，数据库，ORM
+		T是view视图，返回用户.html
+		C是controller控制器，负责用户请求处理，需要的话会调用数据库和.html
+
+		
+	form django.template import Context,Template
+	t = Template("<h1>hello,world {{name}}</h1>")	
+	c = Context({"name":"tg"})
+	t.render(c)
+	returen t
+
+7.模板语言变量的引用和逻辑语句，所以对象的引用都用.
+	{{ name }}
+	{{ list.index }}
+	{{ dict.key }}
+	{{ object.attribute }}
+	{% if 条件 %}
+		xxxx
+	{% elif 条件 %}
+		xxxx
+	{% else %}
+		xxxx
+	{% endif %}
+	{% for i in iterobj %}
+		xxxx
+	{% endfor %}
+
+
+8.模板语言中的管道，filter
+	{{ num|add }}
+	{{ tagtext|safe }} //可以显示tagtext中的代码，而不是raw显示
+
+
+9.自定义filter
+	新建templatetags文件夹
+	新建一个tag文件，mytag
+	在模板页面引入自定义的filter {% load mytag %}
+	make_simpletag, make_filter
+
+10.母版使用
+	{% extends bash.html %}
+	{% block content %}
+		不同页面的内容
+	{% endblock %}
+	{% block super %} //母版的内容
