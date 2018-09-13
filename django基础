@@ -20,8 +20,8 @@ django基础知识：
 	)
 
 5.为新增的models数据库表初始化
-	python manage.py migrations
-	python manage.py migrate
+	python manage.py makemigrations
+	python manage.py makemigrate
 
 
 6.MVC和django的MTV,也是各组件之间为了保持松耦合关系
