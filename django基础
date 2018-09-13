@@ -76,3 +76,9 @@ django基础知识：
 		不同页面的内容
 	{% endblock %}
 	{% block super %} //母版的内容
+	
+11.csrf 跨站伪造请求
+	<form action="/login" method="post">
+		....
+		{% csrf_token %}
+	</form>
