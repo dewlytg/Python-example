@@ -15,7 +15,7 @@
             margin: 0 auto; /*居中*/
             margin-left: 20px;
             margin-top: 20px;
-            margin-bottom: 20px;
+            margin-bottom: 20px; /*标准文档流中margin在垂直方向上有塌陷问题，浮动文档不会出现垂直方向的margin塌陷问题*/
             margin-right: 20px;
             /*-----------------------*/
             padding-left: 20px;
@@ -60,6 +60,11 @@
         a:hover{}
         a:active{}
         a:visited{}
+        a:link{}
+
+        /*伪元素*/
+        p:before{content: "hello"}
+        p:after{content: "goodbye"}
 
         /*适用于所有body，div，li标签*/
         body {}
@@ -85,17 +90,32 @@
         div,p{}
 
         /*给指定class和id设置css的权限大于直接给标签设置权限，不论先后都是class和id的css生效*/
+
+
+        /*清除浮动的四种方法
+        1.给父标签设置固定高度
+        2.给父标签中的最后一个子标签添加clear:both;
+        3.给父标签添加after伪元素
+        4.给父标签添加overflow:hidden;
+        */
+        .clearfix:after{
+            content: '.';
+            display: block;
+            clear: both;
+            visibility: hidden;
+            height: 0px;
+        }
     </style>
 </head>
 <body>
-    <!--常用块级标签 div p-->
+    <!--常用块级标签 div p 可以有height和weight-->
     <div class="my-div" id="myid">
         <div class="div1">11111</div>
     </div>
 
     <p>段落</p>
 
-    <!--常用内联标签-->
+    <!--常用内联标签 没有height和weight-->
     <a href="#" target="_blank">跳转</a>
     <span>小提示</span>
 
