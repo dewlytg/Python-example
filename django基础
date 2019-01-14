@@ -82,3 +82,118 @@ django基础知识：
 		....
 		{% csrf_token %}
 	</form>
+
+12
+"""
+    tip：
+        1，一对多关系中的foreignkey字段可以是写fk_id,也可以是fk对象
+        2，filter(),get(),update() 中不能使用双引号，字段必须是表存在的，__
+        3，values(),values_list() 中要使用双引号，字段可以是关联表，__
+        4，对多对表中反向查找使用class_set,如果指定了related_name="xx",在反向查询的时候可以使用xx代替class_set
+        5，注意get(),filter(),all()的区别，get是获取一个QuerySet对象，可以直接.get().字段名称，filter和all是一个QuerySet集合无法直接.字段名
+
+    :param request:
+    :return:
+    """
+    # 增加数据 普通表
+    # models.Publisher.objects.create(name="新闻出版社")
+    # obj = models.Publisher(name="吉林出版社")
+    # obj.save()
+    # dic = {"name":"中华出版社"}
+    # models.Publisher.objects.create(**dic)
+
+    # 一对多表添加数据
+    # models.Book.objects.create(name="西游记",publish=models.Publisher.objects.get(id=1))
+    # models.Book.objects.create(name="三国演义",publish_id=2)
+
+    # 多对多添加数据
+    # models.Book.objects.create(name="水浒传",publish_id=3)
+    # models.Book.objects.create(name="红楼梦",publish_id=1)
+    # models.Author.objects.create(name="李杰")
+    # models.Author.objects.create(name="张三")
+    # models.Author.objects.create(name="胡伟")
+
+    # 多对多添加对应关系
+    # 正向添加，Author表中有m字段
+    # obj = models.Author.objects.get(id=1)
+    # obj.m.add(1,2)
+    # obj.m.add(models.Book.objects.get(id=3))
+    # 反向添加，Book表中没有关系字段，可以通过author_set字段来处理
+    # obj = models.Book.objects.get(id=2)
+    # obj.author_set.add(1,2,3)
+    # obj.author_set.add(*[4,5,6])
+
+
+
+    ########################################################################################
+
+    # 查询数据 普通表
+    # ret_all = models.Publisher.objects.all()
+    # ret_filter = models.Publisher.objects.filter(id=1)
+    # ret_get = models.Publisher.objects.get(id=1)
+    # ret_values = models.Publisher.objects.values("id","name")
+    # ret_values_list = models.Publisher.objects.values_list("id","name")
+    # print(ret_all)
+    # print(ret_filter)
+    # print(ret_get)
+    # print(ret_values)
+    # print(ret_values_list)
+
+    # 一对多表查询数据
+    # ret_all = models.Book.objects.all()
+    # print(ret_all[0].publish, ret_all[0].publish_id)
+    # print(models.Book.objects.filter(publish=models.Publisher.objects.get(id=2)))
+    # print(models.Book.objects.filter(publish_id=1,id__gt=1))
+    # print(models.Book.objects.filter(publish_id=1,id__gt=1).values_list("name","publish_id","publish__name","publish"))
+    # print(models.Book.objects.get(publish_id=3))
+
+    # 对多对表查询数据，正向查询，m得到的是Book对应的QuerySet集合，可以通过all(),filter(),get()操作，
+    # ret_all = models.Author.objects.all()
+    # print(ret_all[0].m.all())
+    # print(ret_all[0].m.filter(id=9))
+    # print(ret_all[0].m.values())
+    # print(ret_all[0].m.values_list())
+
+    # obj = models.Author.objects.filter(id=1)[0]
+    # print(obj.name,obj.id,obj.m.all())
+    # print(models.Author.objects.values("name","m__name"))
+    # print(models.Author.objects.values_list("name","m__name"))
+
+    # 反向查询
+    # ret_all = models.Book.objects.all()
+    # print(ret_all[0].author_set.all())
+    # print(ret_all[0].author_set.filter(id=1))
+
+    ########################################################################################
+
+    # 修改数据 普通表
+    # models.Publisher.objects.filter(id=1).update(name="武汉出版社")
+
+    # 一对多
+    # models.Book.objects.filter(id=1).update(publish=models.Publisher.objects.get(id=2))
+    # models.Book.objects.filter(id=1).update(publish_id=1)
+    # models.Book.objects.filter(id=4).update(name="Linux鸟哥私房菜")
+
+    # 多对多
+    # obj = models.Author.objects.filter(id=1)[0]
+    # obj.m.set([1,4,7])
+
+    ########################################################################################
+    # 删除数据 普通表
+    # models.Publisher.objects.filter(id=1).delete()
+
+    # 一对多表
+    # models.Book.objects.filter(id=4).delete()
+
+    # 多个外键的跨表正向查询和反向查询
+    # models.User.objects.get(username="alex").user_type.menus.all()
+    # models.User.objects.get(username="alex").user_type.menus.filter(name="配置管理")
+    # models.User.objects.get(username="alex").user_type.menus.get(name="主机信息")
+    # for mu in models.User.objects.get(username="tang.gang").user_type.menus.all():
+    #    print(mu.op.all())
+    # models.User.objects.get(username="tang.gang").user_type.menus.get().op.all()
+
+    # 多对多表
+    # obj = models.Author.objects.filter(id=1)[0]
+    # obj.m.remove(7)
+    # obj.m.clear()
