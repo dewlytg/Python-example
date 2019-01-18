@@ -10,6 +10,7 @@
           a.空白折叠：两个标签中间如果有换行就会有空格。
           b.垂直塌陷：两个标签如果一个设置了margin-top，一个设置了margin-bottom 会取交集
           c.行内元素无法设置宽高
+          d.行内元素不能包含块，块可以包含任何元素，除了p标签外
         2.通过float和position:absolute;可以设置标签浮动和定位，设置此属性后标签变成非标准文档流
           非标准文档流下的标签可以不遵循标准文档流的属性，任何标签都可以设置宽高
         3.设置浮动后标签特效
@@ -20,7 +21,8 @@
         6.position:relative;相对于自己的位置微调  单个盒子设置
           position:absolute;相对于浏览器左上角微调  单个盒子设置
           父想子绝是最多的使用情况，一个在父盒子设置position:relative;子盒子设置position:absolute;来调整子盒子在父盒子的位置; 两个盒子设置
-
+        7.onmouseover | onmouseout 穿过父元素或子元素
+          onmouseenter | onmouseleave 只穿过父元素
 
     -->
     <!--标准文档流inline标签不能设置高宽，浮动标签可以设置高宽，并且没有标准文档流的空白折叠，浮动文档流会自动收缩-->
