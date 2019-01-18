@@ -3,6 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <!--
+    html总结：
+        1.普通的html为标准文档流
+          标准文档流特性：
+          a.空白折叠：两个标签中间如果有换行就会有空格。
+          b.垂直塌陷：两个标签如果一个设置了margin-top，一个设置了margin-bottom 会取交集
+          c.行内元素无法设置宽高
+        2.通过float和position:absolute;可以设置标签浮动和定位，设置此属性后标签变成非标准文档流
+          非标准文档流下的标签可以不遵循标准文档流的属性，任何标签都可以设置宽高
+        3.设置浮动后标签特效
+          a.设置float：left后除了第一个标签靠近父盒子浮动，其他盒子都靠近上一个盒子浮动，后浮动也是如此
+          b.浮动后标签自动收缩
+        4.父盒子不设置高度或者宽度，子盒子会撑起来
+        5.float设置大方向定位，position是微调
+        6.position:relative;相对于自己的位置微调  单个盒子设置
+          position:absolute;相对于浏览器左上角微调  单个盒子设置
+          父想子绝是最多的使用情况，一个在父盒子设置position:relative;子盒子设置position:absolute;来调整子盒子在父盒子的位置; 两个盒子设置
+
+
+    -->
+    <!--标准文档流inline标签不能设置高宽，浮动标签可以设置高宽，并且没有标准文档流的空白折叠，浮动文档流会自动收缩-->
     <style>
         .my-div{
             {#top right left bottom 盒子全局定位，margin-top,margin 盒子相对于全局定位的的边距盒子之间的距离，不会影响盒子大小，padding 盒子内容相对于盒子的间距盒子中内容的到边框的距离，会影响盒子大小，border 盒子本身的边框#}
@@ -12,7 +33,7 @@
             bottom: 20px;
             right: 20px;
             /*-----------------------*/
-            margin: 0 auto; /*居中*/
+            margin: 0 auto; /*居中 如果盒子浮动了，margin:0 auto 不起作用了*/
             margin-left: 20px;
             margin-top: 20px;
             margin-bottom: 20px; /*标准文档流中margin在垂直方向上有塌陷问题，浮动文档不会出现垂直方向的margin塌陷问题*/
@@ -53,7 +74,9 @@
             z-index: auto; /*模态对话框*/
             position: fixed; /*模态对话框*/
             opacity: 0.1; /*模态对话框*/
+
             /*tip: 悬浮和位置不要一起使用在一个css中*/
+
         }
 
         /*伪类*/
@@ -104,6 +127,18 @@
             clear: both;
             visibility: hidden;
             height: 0px;
+        }
+
+        /*
+
+        ID选择器的特殊性值，加0,1,0,0。
+        类选择器、属性选择器或伪类，加0,0,1,0。
+        元素和伪元素，加0,0,0,1。
+        通配选择器*对特殊性没有贡献，即0,0,0,0。
+        最后比较特殊的一个标志!important（权重），它没有特殊性值，但它的优先级是最高的，为了方便记忆，可以认为它的特殊性值为1,0,0,0,0。
+        */
+        div{
+            box-shadow: 1px 2px 3px #fff3f3;
         }
     </style>
 </head>
